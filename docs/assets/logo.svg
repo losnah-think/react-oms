@@ -1,0 +1,57 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="secondaryGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f093fb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f5576c;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="url(#primaryGradient)" filter="url(#glow)"/>
+  
+  <!-- Store/Shop icon base -->
+  <rect x="40" y="80" width="120" height="80" rx="8" fill="white" opacity="0.9"/>
+  
+  <!-- Roof -->
+  <path d="M30 80 L100 50 L170 80 Z" fill="url(#secondaryGradient)"/>
+  
+  <!-- Door -->
+  <rect x="85" y="120" width="30" height="40" rx="4" fill="url(#primaryGradient)"/>
+  <circle cx="110" cy="140" r="2" fill="white"/>
+  
+  <!-- Windows -->
+  <rect x="50" y="100" width="20" height="20" rx="2" fill="url(#primaryGradient)" opacity="0.7"/>
+  <rect x="130" y="100" width="20" height="20" rx="2" fill="url(#primaryGradient)" opacity="0.7"/>
+  
+  <!-- Window frames -->
+  <line x1="60" y1="100" x2="60" y2="120" stroke="white" stroke-width="1"/>
+  <line x1="50" y1="110" x2="70" y2="110" stroke="white" stroke-width="1"/>
+  <line x1="140" y1="100" x2="140" y2="120" stroke="white" stroke-width="1"/>
+  <line x1="130" y1="110" x2="150" y2="110" stroke="white" stroke-width="1"/>
+  
+  <!-- React symbol overlay -->
+  <g transform="translate(75, 25)">
+    <!-- Electron orbits -->
+    <ellipse cx="25" cy="25" rx="20" ry="8" stroke="white" stroke-width="2" fill="none" opacity="0.8" transform="rotate(0)"/>
+    <ellipse cx="25" cy="25" rx="20" ry="8" stroke="white" stroke-width="2" fill="none" opacity="0.8" transform="rotate(60)"/>
+    <ellipse cx="25" cy="25" rx="20" ry="8" stroke="white" stroke-width="2" fill="none" opacity="0.8" transform="rotate(120)"/>
+    <!-- Nucleus -->
+    <circle cx="25" cy="25" r="3" fill="white"/>
+  </g>
+  
+  <!-- OMS text -->
+  <text x="100" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">
+    OMS
+  </text>
+</svg>

@@ -1,0 +1,201 @@
+site_name: "🚀 React OMS - Professional Documentation"
+site_description: "Complete guide and policy documentation for React Order Management System"
+site_author: "React OMS Development Team"
+site_url: https://react-oms-docs.github.io/
+
+# Repository
+repo_name: react-oms/docs
+repo_url: https://github.com/react-oms/docs
+edit_uri: edit/main/docs/
+
+# Configuration
+theme:
+  name: material
+  language: ko
+  
+  # Color palette with multiple schemes
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
+
+  # Enhanced features
+  features:
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.tooltips
+    - content.tabs.link
+    - header.autohide
+    - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    - toc.integrate
+
+  # Logo and favicon
+  icon:
+    logo: material/store-outline
+    repo: fontawesome/brands/github
+    edit: material/pencil
+    view: material/eye
+    
+  # Font configuration
+  font:
+    text: Noto Sans KR
+    code: JetBrains Mono
+
+# Plugins
+plugins:
+  - search:
+      lang: ko
+      separator: '[\s\-\.]+'
+  - minify:
+      minify_html: true
+      minify_js: true
+      htmlmin_opts:
+        remove_comments: true
+      cache_safe: true
+
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+      title: 목차
+  - tables
+  
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: react-oms
+      repo: docs
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      auto_append:
+        - includes/mkdocs.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Page tree
+nav:
+  - 홈:
+    - 시작하기: index.md
+    - 시스템 개요: overview.md
+    - 빠른 시작: quick-start.md
+  
+  - 사용자 가이드:
+    - 대시보드: guide/dashboard.md
+    - 상품 관리:
+      - 상품 목록: guide/products/list.md
+      - 상품 등록: guide/products/register.md
+      - 상품 수정: guide/products/edit.md
+      - 카테고리 관리: guide/products/categories.md
+    - 쇼핑몰 관리:
+      - 쇼핑몰 연동: guide/malls/connection.md
+      - 채널별 관리: guide/malls/channels.md
+      - 카테고리 매핑: guide/malls/mapping.md
+    - 외부 API:
+      - API 연동 설정: guide/api/setup.md
+      - 상품 불러오기: guide/api/import.md
+      - 동기화: guide/api/sync.md
+  
+  - 정책 및 규칙:
+    - 데이터 처리 정책: policy/data-policy.md
+    - API 사용 정책: policy/api-policy.md
+    - 필드 규격: policy/field-specs.md
+    - 입력 규칙: policy/input-rules.md
+    - 서비스 이용약관: policy/terms-of-service.md
+    - 개인정보 처리방침: policy/privacy-policy.md
+    - 운영 정책: policy/operations-policy.md
+  
+  - 기술 문서:
+    - API 레퍼런스: tech/api-reference.md
+    - 데이터베이스 스키마: tech/database.md
+    - 에러 코드: tech/error-codes.md
+    - 문제 해결: tech/troubleshooting.md
+  
+  - 배포 및 운영:
+    - 설치 가이드: deployment/installation.md
+    - Docker 배포: deployment/docker.md
+    - 환경 설정: deployment/configuration.md
+    - 모니터링: deployment/monitoring.md
+
+# Extra
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/react-oms
+    - icon: fontawesome/solid/envelope
+      link: mailto:support@react-oms.com
+
+extra_css:
+  - stylesheets/extra.css
+  - stylesheets/theme-enhanced.css
+
+copyright: Copyright &copy; 2024 React OMS Team

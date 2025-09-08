@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="{{ config.theme.language or 'en' }}" dir="ltr" data-md-color-scheme="default" data-md-color-primary="{{ config.theme.palette.primary or 'indigo' }}" data-md-color-accent="{{ config.theme.palette.accent or 'indigo' }}">
+  <head>
+    {% block site_meta %}
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta name="author" content="{{ config.site_author }}">
+      <meta name="description" content="{{ config.site_description }}">
+      <meta name="keywords" content="React, OMS, Order Management System, 주문관리시스템, 쇼핑몰, API">
+      <meta property="og:type" content="website">
+      <meta property="og:title" content="{{ config.site_name }}">
+      <meta property="og:description" content="{{ config.site_description }}">
+      <meta property="og:url" content="{{ config.site_url }}">
+      <meta property="og:image" content="{{ config.site_url }}assets/og-image.png">
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="{{ config.site_name }}">
+      <meta name="twitter:description" content="{{ config.site_description }}">
+      <meta name="twitter:image" content="{{ config.site_url }}assets/og-image.png">
+    {% endblock %}
+    
+    {% block htmltitle %}
+      {% if page.title and not page.is_homepage %}
+        <title>{{ page.title | striptags }} - {{ config.site_name }}</title>
+      {% else %}
+        <title>{{ config.site_name }}</title>
+      {% endif %}
+    {% endblock %}
+    
+    {% block styles %}
+      <link rel="stylesheet" href="{{ 'assets/stylesheets/main.css' | url }}">
+      {% if config.theme.palette %}
+        {% set palette = config.theme.palette %}
+        {% if not palette is sequence %}
+          {% set palette = [palette] %}
+        {% endif %}
+        {% for scheme in palette %}
+          <link rel="stylesheet" href="{{ 'assets/stylesheets/palette.css' | url }}">
+        {% endfor %}
+      {% endif %}
+      {% for path in config.extra_css %}
+        <link rel="stylesheet" href="{{ path | url }}">
+      {% endfor %}
+      
+      <!-- Google Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+      
+      <!-- Custom animations and effects -->
+      <style>
+        /* Loading animation */
+        .md-container {
+          animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+          }
+          to {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+          }
+        }
+        
+        /* Hero section enhancement */
+        .md-typeset h1:first-child {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-size: 3rem;
+          font-weight: 900;
+          text-align: center;
+          margin: 2rem 0;
+          position: relative;
+        }
+        
+        .md-typeset h1:first-child::after {
+          content: '';
+          position: absolute;
+          bottom: -10px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 100px;
+          height: 4px;
+          background: linear-gradient(90deg, #667eea, #764ba2);
+          border-radius: 2px;
+        }
+        
+        /* Enhanced navigation */
+        .md-tabs__link {
+          font-weight: 500;
+          transition: all 0.3s ease;
+        }
+        
+        .md-tabs__link:hover {
+          transform: translateY(-2px);
+          text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Smooth scrolling */
+        html {
+          scroll-behavior: smooth;
+        }
+        
+        /* Enhanced search */
+        .md-search__input {
+          border-radius: 25px;
+        }
+        
+        /* Back to top button animation */
+        .md-top {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .md-top:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        /* Progress indicator */
+        .md-header {
+          position: relative;
+        }
+        
+        .md-header::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 2px;
+          background: linear-gradient(90deg, #667eea, #764ba2);
+          width: var(--scroll-progress, 0%);
+          transition: width 0.1s ease;
+        }
+      </style>
+    {% endblock %}
+    
+    {% block libs %}{% endblock %}
+    
+    {% block fonts %}{% endblock %}
+  </head>
+  
+  <body dir="{{ config.theme.direction or 'ltr' }}" data-md-color-scheme="default" data-md-color-primary="{{ config.theme.palette.primary or 'indigo' }}" data-md-color-accent="{{ config.theme.palette.accent or 'indigo' }}">
+    
+    <!-- Progress scroll indicator -->
+    <script>
+      window.addEventListener('scroll', () => {
+        const scrollTop = document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = (scrollTop / scrollHeight) * 100;
+        document.documentElement.style.setProperty('--scroll-progress', progress + '%');
+      });
+    </script>
+    
+    {% block container %}
+      <div class="md-container" data-md-component="container">
+        {% block header %}
+          {% include "partials/header.html" %}
+        {% endblock %}
+        
+        <main class="md-main" data-md-component="main">
+          <div class="md-main__inner md-grid">
+            {% block site_nav %}
+              {% if nav %}
+                {% if page.meta and page.meta.hide %}
+                  {% set hidden = "hidden" if "navigation" in page.meta.hide %}
+                {% endif %}
+                <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" {{ hidden }}>
+                  <div class="md-sidebar__scrollwrap">
+                    <div class="md-sidebar__inner">
+                      {% include "partials/nav.html" %}
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+              {% if page.toc %}
+                {% if page.meta and page.meta.hide %}
+                  {% set hidden = "hidden" if "toc" in page.meta.hide %}
+                {% endif %}
+                <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" {{ hidden }}>
+                  <div class="md-sidebar__scrollwrap">
+                    <div class="md-sidebar__inner">
+                      {% include "partials/toc.html" %}
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endblock %}
+            
+            {% block content %}
+              <div class="md-content" data-md-component="content">
+                <article class="md-content__inner md-typeset">
+                  {% block content_inner %}
+                    {% if page.edit_url %}
+                      <a href="{{ page.edit_url }}" title="{{ lang.t('edit.link.title') }}" class="md-content__button md-icon">
+                        {% include ".icons/material/pencil.svg" %}
+                      </a>
+                    {% endif %}
+                    
+                    {% if not "\x00" in page.content %}
+                      {{ page.content }}
+                    {% endif %}
+                    
+                    {% if page and page.meta %}
+                      {% if page.meta.git_revision_date_localized or page.meta.revision_date %}
+                        {% include "partials/source-date.html" %}
+                      {% endif %}
+                    {% endif %}
+                  {% endblock %}
+                </article>
+              </div>
+            {% endblock %}
+          </div>
+          
+          {% block footer %}
+            {% include "partials/footer.html" %}
+          {% endblock %}
+        </main>
+      </div>
+    {% endblock %}
+    
+    {% block config %}
+      {%- set config = {
+        "base": base_url,
+        "features": config.theme.features or [],
+        "search": "assets/javascripts/workers/search.js" | url
+      } -%}
+      <script id="__config" type="application/json">
+        {{- config | tojson -}}
+      </script>
+    {% endblock %}
+    
+    {% block scripts %}
+      <script src="{{ 'assets/javascripts/bundle.js' | url }}"></script>
+      {% for path in config.extra_javascript %}
+        <script src="{{ path | url }}"></script>
+      {% endfor %}
+    {% endblock %}
+  </body>
+</html>

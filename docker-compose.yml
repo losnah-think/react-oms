@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  react-oms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5050:3000"  # 5050 포트로 변경
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    restart: unless-stopped
+    container_name: react-oms-app
+
+  # 필요시 Nginx 프록시 추가
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "5080:80"   # Nginx도 다른 포트로 변경
+      - "5443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro  # SSL 인증서가 있다면
+    depends_on:
+      - react-oms
+    restart: unless-stopped
+    container_name: react-oms-nginx
+    profiles: ["with-nginx"]  # nginx 사용시에만 실행

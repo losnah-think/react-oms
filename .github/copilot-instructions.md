@@ -1,0 +1,5 @@
+- [x] Next.js + Tailwind 프로젝트 구조 생성
+- [x] /products, /products/[id] 라우트 생성 (페이지 내용 비워둠)
+- [x] 더미 데이터 파일 생성
+- [x] 기본 설정 파일 생성
+- [x] README.md 작성
