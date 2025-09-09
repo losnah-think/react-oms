@@ -151,11 +151,11 @@ const ProductCard: React.FC<{
       className="group border rounded-2xl bg-white shadow-sm hover:shadow-md transition overflow-hidden cursor-pointer"
       onClick={() => router.push(`/products/${product.id}`)}
     >
-      <div className="flex gap-4 p-4">
+      <div className="flex gap-6 p-6">
         <div className="flex items-start pt-1" onClick={(e) => e.stopPropagation()}>
           <Checkbox checked={selected} onChange={onToggleSelect} />
         </div>
-        <div className="h-32 w-32 rounded-2xl overflow-hidden flex-shrink-0 bg-gray-100 border">
+        <div className="h-36 w-36 rounded-2xl overflow-hidden flex-shrink-0 bg-gray-100 border">
           <img
             src={product.image || "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80"}
             alt={product.name}
@@ -163,32 +163,81 @@ const ProductCard: React.FC<{
           />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <div className="font-semibold text-gray-900 truncate text-base">{product.name}</div>
-              <div className="mt-1 grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-1 text-sm text-gray-600">
-                <div><span className="text-gray-500">사입상품명</span> | {product.code}</div>
-                <div><span className="text-gray-500">상품 분류</span> | {product.category || "미입력"}</div>
-                <div><span className="text-gray-500">배송비정책</span> | {product.shippingPolicy || "미지정"}</div>
-                <div><span className="text-gray-500">판매가</span> | {krw(product.salePrice)}</div>
-                <div><span className="text-gray-500">원가</span> | {krw(product.purchasePrice)}</div>
-                <div className="text-gray-400"><span className="text-gray-500">등록일자</span> | {new Date(product.createdAt).toLocaleString("ko-KR")}</div>
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0 flex-1">
+              {/* 제품명 - 이미지 상단 라인에 맞춤 */}
+              <div className="font-semibold text-gray-900 truncate text-lg mb-3">{product.name}</div>
+              
+              {/* 기본 정보 - 두 줄로 표현 */}
+              <div className="space-y-2 text-sm">
+                {/* 첫 번째 줄: 상품코드 + 분류 */}
+                <div className="flex items-center gap-8">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500 font-medium">상품코드</span>
+                    <span className="text-gray-800">{product.code}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500 font-medium">분류</span>
+                    <span className="text-gray-800">{product.category || "미분류"}</span>
+                  </div>
+                </div>
+                
+                {/* 두 번째 줄: 등록일 + 배송정책 */}
+                <div className="flex items-center gap-8">
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500 font-medium">등록일</span>
+                    <span className="text-gray-800">{new Date(product.createdAt).toLocaleDateString("ko-KR")}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-gray-500 font-medium">배송정책</span>
+                    <span className="text-gray-800">{product.shippingPolicy || "미지정"}</span>
+                  </div>
+                </div>
               </div>
-              <div className="mt-2 flex items-center gap-2 flex-wrap text-xs">
-                <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-gray-600 bg-white/70">코드: {product.code.split(",")[0]}</span>
+
+              {/* 가격 정보 */}
+              <div className="mt-4 flex items-center gap-6 text-sm">
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500 font-medium">원가</span>
+                  <span className="text-gray-800 font-semibold">{krw(product.purchasePrice)}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500 font-medium">공급가</span>
+                  <span className="text-gray-800 font-semibold">{krw(product.supplyPrice)}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500 font-medium">마진</span>
+                  <span className="text-green-600 font-bold">{krw(product.marginPrice)}</span>
+                </div>
+              </div>
+
+              {/* 옵션 정보 배지 */}
+              <div className="mt-3 flex items-center gap-2 flex-wrap text-xs">
                 {isClient && (
                   <>
-                    <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-gray-600 bg-white/70">옵션 {product.variants.length}개</span>
+                    <span className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-gray-700 font-medium">
+                      📝 옵션 {product.variants.length}개
+                    </span>
                     {firstV?.barcode?.length ? (
-                      <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-gray-600 bg-white/70">바코드 {firstV.barcode.length}개(대표)</span>
+                      <span className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-blue-700 font-medium">
+                        🏷️ 바코드 {firstV.barcode.length}개
+                      </span>
                     ) : null}
                   </>
                 )}
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <IconBtn onClick={(e) => {e.stopPropagation(); alert(`수정: ${product.id}`);}}>✏️</IconBtn>
-              <IconBtn onClick={(e) => {e.stopPropagation(); alert(`삭제: ${product.id}`);}}>🗑️</IconBtn>
+            
+            {/* 가격과 액션 버튼 */}
+            <div className="flex flex-col items-end gap-3">
+              <div className="text-right">
+                <div className="text-2xl font-bold text-blue-600">{krw(product.salePrice)}</div>
+                <div className="text-xs text-gray-500 mt-1">판매가</div>
+              </div>
+              <div className="flex items-center gap-2">
+                <IconBtn onClick={(e) => {e.stopPropagation(); alert(`수정: ${product.id}`);}}>✏️</IconBtn>
+                <IconBtn onClick={(e) => {e.stopPropagation(); alert(`삭제: ${product.id}`);}}>🗑️</IconBtn>
+              </div>
             </div>
           </div>
 
