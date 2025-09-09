@@ -930,23 +930,22 @@ const Pagination: React.FC<{
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium';
 }> = ({ currentPage, totalPages, onPageChange, size = 'medium' }) => {
-  const maxVisiblePages = 5;
-  const startPage = Math.max(1, Math.min(totalPages - maxVisiblePages + 1, currentPage - 2));
+  const maxVisiblePages = 7; // 더 많은 페이지 표시
+  const startPage = Math.max(1, Math.min(totalPages - maxVisiblePages + 1, currentPage - 3));
   const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
   const sizes = {
-    small: 'w-8 h-8 text-xs',
-    medium: 'w-10 h-10 text-sm',
-    large: 'w-12 h-12 text-base'
+    small: 'w-8 h-8 text-sm',
+    medium: 'w-10 h-10 text-sm'
   };
 
   return (
     <div className="flex items-center justify-center gap-2">
       <Button
         variant="secondary"
-        size={size === 'large' ? 'large' : size === 'small' ? 'small' : 'medium'}
+        size={size === 'small' ? 'small' : 'medium'}
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
       >
@@ -972,7 +971,7 @@ const Pagination: React.FC<{
       
       <Button
         variant="secondary"
-        size={size === 'large' ? 'large' : size === 'small' ? 'small' : 'medium'}
+        size={size === 'small' ? 'small' : 'medium'}
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
       >
@@ -1298,30 +1297,46 @@ const ComponentsLibrary: React.FC = () => {
             <div>
               <h3 className="text-lg font-semibold mb-4 text-gray-700">그리드 시스템</h3>
               <div className="space-y-4">
-                {/* 12 Column Grid Visual */}
+                {/* 24 Column Grid Visual */}
                 <div className="bg-blue-50 rounded-xl p-6">
-                  <h4 className="font-semibold text-blue-900 mb-4">12-Column Grid</h4>
-                  <div className="grid grid-cols-12 gap-2 mb-4">
-                    {Array.from({ length: 12 }, (_, i) => (
-                      <div key={i} className="bg-blue-200 text-blue-800 text-xs text-center py-2 rounded font-mono">
+                  <h4 className="font-semibold text-blue-900 mb-4">24-Column Grid</h4>
+                  <div className="grid grid-cols-24 gap-1 mb-4">
+                    {Array.from({ length: 24 }, (_, i) => (
+                      <div key={i} className="bg-blue-200 text-blue-800 text-xs text-center py-1 rounded font-mono">
                         {i + 1}
                       </div>
                     ))}
                   </div>
                   <div className="space-y-3">
-                    <div className="grid grid-cols-12 gap-2">
-                      <div className="col-span-6 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">6 columns</div>
-                      <div className="col-span-6 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">6 columns</div>
+                    <div className="grid grid-cols-24 gap-1">
+                      <div className="col-span-12 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">12 columns (50%)</div>
+                      <div className="col-span-12 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">12 columns (50%)</div>
                     </div>
-                    <div className="grid grid-cols-12 gap-2">
-                      <div className="col-span-4 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">4 cols</div>
-                      <div className="col-span-4 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">4 cols</div>
-                      <div className="col-span-4 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">4 cols</div>
+                    <div className="grid grid-cols-24 gap-1">
+                      <div className="col-span-8 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">8 cols</div>
+                      <div className="col-span-8 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">8 cols</div>
+                      <div className="col-span-8 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">8 cols</div>
                     </div>
-                    <div className="grid grid-cols-12 gap-2">
-                      <div className="col-span-3 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">3</div>
-                      <div className="col-span-9 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">9 columns</div>
+                    <div className="grid grid-cols-24 gap-1">
+                      <div className="col-span-6 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">6</div>
+                      <div className="col-span-18 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">18 columns</div>
                     </div>
+                    <div className="grid grid-cols-24 gap-1">
+                      <div className="col-span-4 bg-purple-300 text-purple-900 text-sm text-center py-3 rounded font-semibold">4</div>
+                      <div className="col-span-16 bg-purple-300 text-purple-900 text-sm text-center py-3 rounded font-semibold">16 columns</div>
+                      <div className="col-span-4 bg-purple-300 text-purple-900 text-sm text-center py-3 rounded font-semibold">4</div>
+                    </div>
+                  </div>
+                  
+                  {/* 24그리드 장점 설명 */}
+                  <div className="mt-6 p-4 bg-blue-100 rounded-lg">
+                    <h5 className="font-semibold text-blue-900 mb-2">24-Column Grid 장점</h5>
+                    <ul className="text-sm text-blue-800 space-y-1">
+                      <li>• 더 세밀한 레이아웃 조정 가능</li>
+                      <li>• 3분할, 4분할, 6분할, 8분할 모두 가능</li>
+                      <li>• 복잡한 상품 목록 레이아웃에 최적화</li>
+                      <li>• 반응형 디자인 유연성 증대</li>
+                    </ul>
                   </div>
                 </div>
 
@@ -1599,7 +1614,7 @@ const ComponentsLibrary: React.FC = () => {
               
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-md font-medium mb-3 text-gray-600">Small</h4>
+                  <h4 className="text-md font-medium mb-3 text-gray-600">Small - 모바일 최적화</h4>
                   <Pagination
                     currentPage={currentPage}
                     totalPages={10}
@@ -1609,7 +1624,7 @@ const ComponentsLibrary: React.FC = () => {
                 </div>
                 
                 <div>
-                  <h4 className="text-md font-medium mb-3 text-gray-600">Medium</h4>
+                  <h4 className="text-md font-medium mb-3 text-gray-600">Medium - 데스크톱 기본</h4>
                   <Pagination
                     currentPage={currentPage}
                     totalPages={10}
@@ -1617,16 +1632,17 @@ const ComponentsLibrary: React.FC = () => {
                     size="medium"
                   />
                 </div>
-                
-                <div>
-                  <h4 className="text-md font-medium mb-3 text-gray-600">Large</h4>
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={10}
-                    onPageChange={setCurrentPage}
-                    size="large"
-                  />
-                </div>
+              </div>
+              
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-semibold text-gray-900 mb-2">페이지네이션 가이드</h4>
+                <ul className="text-sm text-gray-700 space-y-1">
+                  <li>• Small: 모바일 환경에서 사용, 터치 친화적 (32px × 32px)</li>
+                  <li>• Medium: 데스크톱 기본 크기, 최적의 가독성 (40px × 40px)</li>
+                  <li>• 최대 표시 페이지: 7개 (1 ... 4 5 6 ... 10)</li>
+                  <li>• 이전/다음 버튼은 항상 표시되며 상황에 따라 비활성화</li>
+                  <li>• 간결하고 명확한 디자인으로 사용성 최적화</li>
+                </ul>
               </div>
             </div>
           </div>
