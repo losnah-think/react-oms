@@ -1045,6 +1045,14 @@ const ComponentsLibrary: React.FC = () => {
           </div>
 
           <div className="relative z-10">
+            {/* 제안서 배지 */}
+            <div className="mb-4 flex justify-center">
+              <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-400 to-pink-500 text-white rounded-full font-bold shadow-lg transform hover:scale-105 transition-all duration-200 animate-pulse">
+                📋 DESIGN PROPOSAL
+                <span className="bg-white/20 px-3 py-1 rounded-full text-sm">고객사 제안</span>
+              </span>
+            </div>
+            
             <h1 
               className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 transform hover:scale-105 transition-transform duration-300"
               style={{
@@ -1057,7 +1065,7 @@ const ComponentsLibrary: React.FC = () => {
               🎨 UI 컴포넌트 라이브러리
             </h1>
             <p 
-              className="text-xl text-gray-700 max-w-3xl mx-auto font-medium leading-relaxed"
+              className="text-xl text-gray-700 max-w-3xl mx-auto font-medium leading-relaxed mb-4"
               style={{
                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
               }}
@@ -1065,6 +1073,18 @@ const ComponentsLibrary: React.FC = () => {
               피그마 컴포넌트 변환을 위한 완전한 3D UI 패턴 모음집입니다. 
               각 컴포넌트는 다양한 상태와 variant를 제공하며, 3D 일러스트레이션으로 더욱 생동감 있게 구성되었습니다.
             </p>
+            
+            {/* 제안서 안내 메시지 */}
+            <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 max-w-2xl mx-auto">
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl">💡</span>
+                <h3 className="font-bold text-blue-900">이 페이지는 디자인 제안서입니다</h3>
+              </div>
+              <p className="text-blue-700 text-sm leading-relaxed">
+                실제 개발에서는 더욱 다양한 컴포넌트와 기능, 최적화된 성능을 제공할 예정입니다. 
+                현재는 UI/UX 방향성과 디자인 시스템을 확인하실 수 있습니다.
+              </p>
+            </div>
           </div>
         </div>
 
