@@ -7,7 +7,7 @@ export default function Home() {
 
   useEffect(() => {
     // 메인 페이지 접속시 자동으로 components-library 페이지로 리다이렉트
-    router.push("/components-library");
+    router.push("/design-system");
   }, [router]);
 
   return (
