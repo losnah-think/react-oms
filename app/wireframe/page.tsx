@@ -1,5 +1,46 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, ErrorInfo } from "react";
+
+// Error Boundary Component
+class WireframeErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error?: Error }
+> {
+  constructor(props: { children: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Wireframe Error Boundary caught an error:', error, errorInfo);
+    // 알럿 대신 콘솔에만 로그 출력
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">와이어프레임 로딩 중 문제가 발생했습니다</h2>
+            <p className="text-gray-600 mb-4">페이지를 새로고침해 주세요.</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              새로고침
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
 
 // ---------- Wireframe Components ----------
 
@@ -281,8 +322,44 @@ const WireModal: React.FC<{
 
 // Main Wireframe System Page
 const WireframeSystem: React.FC = () => {
-  const [selectedLayout, setSelectedLayout] = useState<string>('dashboard');
-  const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    // 페이지 로드 시 JavaScript 에러로 인한 알럿 방지
+    const originalAlert = window.alert;
+    const originalConfirm = window.confirm;
+    
+    // alert와 confirm을 일시적으로 오버라이드
+    window.alert = (message) => {
+      console.log('Alert blocked:', message);
+      return;
+    };
+    
+    window.confirm = (message) => {
+      console.log('Confirm blocked:', message);
+      return true; // 기본값으로 true 반환
+    };
+
+    const handleError = (event: ErrorEvent) => {
+      console.error('Wireframe page error caught:', event.error);
+      event.preventDefault(); // 브라우저 기본 알럿 방지
+      return false;
+    };
+
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      console.error('Unhandled promise rejection:', event.reason);
+      event.preventDefault(); // 브라우저 기본 알럿 방지
+    };
+
+    window.addEventListener('error', handleError);
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+    
+    return () => {
+      // 정리 시 원래 함수들 복원
+      window.alert = originalAlert;
+      window.confirm = originalConfirm;
+      window.removeEventListener('error', handleError);
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50 p-8">
@@ -308,6 +385,24 @@ const WireframeSystem: React.FC = () => {
           <div className="mt-6 inline-flex items-center gap-2 bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">
             <span className="w-2 h-2 bg-purple-500 rounded-full animate-pulse"></span>
             실시간 프로토타이핑 도구
+          </div>
+        </div>
+
+        {/* System Notice */}
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4 mb-8">
+          <div className="flex items-start gap-3">
+            <div className="flex-shrink-0 mt-0.5">
+              <div className="w-5 h-5 bg-blue-400 rounded-full flex items-center justify-center">
+                <span className="text-blue-800 text-xs font-bold">i</span>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-blue-800 font-semibold mb-1">📋 시스템 안내</h3>
+              <p className="text-blue-700 text-sm leading-relaxed">
+                현재 와이어프레임 시스템은 <strong>프로토타이핑 전용</strong>이며, 빠른 기획 및 구조 설계를 위해 제작되었습니다.<br/>
+                실제 개발 시에는 디자인 시스템의 완성된 컴포넌트를 사용해 주시기 바랍니다.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -483,29 +578,10 @@ const WireframeSystem: React.FC = () => {
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-purple-100">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">6. 레이아웃 템플릿</h2>
           
-          <div className="space-y-6">
-            {/* Layout Selector */}
-            <div className="flex flex-wrap gap-2 mb-6">
-              {['dashboard', 'list-detail', 'form', 'landing'].map((layout) => (
-                <button
-                  key={layout}
-                  onClick={() => setSelectedLayout(layout)}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                    selectedLayout === layout
-                      ? 'bg-purple-500 text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  {layout === 'dashboard' && '대시보드'}
-                  {layout === 'list-detail' && '목록-상세'}
-                  {layout === 'form' && '폼 페이지'}
-                  {layout === 'landing' && '랜딩페이지'}
-                </button>
-              ))}
-            </div>
-
+          <div className="space-y-8">
             {/* Dashboard Layout */}
-            {selectedLayout === 'dashboard' && (
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-purple-800">대시보드 레이아웃</h3>
               <div className="border-2 border-dashed border-purple-300 rounded-lg p-4 space-y-4">
                 <WireNavigation />
                 <div className="grid grid-cols-4 gap-4">
@@ -525,10 +601,35 @@ const WireframeSystem: React.FC = () => {
                 </div>
                 <WireTable columns={5} rows={4} />
               </div>
-            )}
+            </div>
 
             {/* List-Detail Layout */}
-            {selectedLayout === 'list-detail' && (
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-purple-800">목록-상세 레이아웃</h3>
+              <div className="border-2 border-dashed border-purple-300 rounded-lg p-4 space-y-4">
+                <WireNavigation />
+                <div className="grid grid-cols-4 gap-4">
+                  <WireBox height="80px" label="KPI 1" color="blue" />
+                  <WireBox height="80px" label="KPI 2" color="green" />
+                  <WireBox height="80px" label="KPI 3" color="purple" />
+                  <WireBox height="80px" label="KPI 4" color="gray" />
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="col-span-2">
+                    <WireBox height="200px" label="주요 차트" color="blue" />
+                  </div>
+                  <div className="space-y-4">
+                    <WireBox height="90px" label="통계 1" />
+                    <WireBox height="90px" label="통계 2" />
+                  </div>
+                </div>
+                <WireTable columns={5} rows={4} />
+              </div>
+            </div>
+
+            {/* List-Detail Layout */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-purple-800">목록-상세 레이아웃</h3>
               <div className="border-2 border-dashed border-purple-300 rounded-lg p-4 space-y-4">
                 <WireNavigation />
                 <div className="grid grid-cols-5 gap-4" style={{ minHeight: '400px' }}>
@@ -553,10 +654,11 @@ const WireframeSystem: React.FC = () => {
                   </div>
                 </div>
               </div>
-            )}
+            </div>
 
             {/* Form Layout */}
-            {selectedLayout === 'form' && (
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-purple-800">폼 페이지 레이아웃</h3>
               <div className="border-2 border-dashed border-purple-300 rounded-lg p-4 space-y-4">
                 <WireNavigation />
                 <div className="max-w-2xl mx-auto space-y-6">
@@ -573,33 +675,7 @@ const WireframeSystem: React.FC = () => {
                   </div>
                 </div>
               </div>
-            )}
-
-            {/* Landing Layout */}
-            {selectedLayout === 'landing' && (
-              <div className="border-2 border-dashed border-purple-300 rounded-lg p-4 space-y-6">
-                <WireNavigation />
-                {/* Hero Section */}
-                <div className="text-center space-y-4 py-12">
-                  <WireText variant="title" align="center" width="60%" />
-                  <WireText lines={2} align="center" width="40%" />
-                  <div className="flex justify-center">
-                    <WireButton variant="primary" size="large" label="시작하기" />
-                  </div>
-                </div>
-                {/* Features */}
-                <div className="grid grid-cols-3 gap-6">
-                  <WireCard hasImage={false} />
-                  <WireCard hasImage={false} />
-                  <WireCard hasImage={false} />
-                </div>
-                {/* CTA Section */}
-                <div className="text-center space-y-4 py-8 bg-gray-50 rounded-lg">
-                  <WireText variant="subtitle" align="center" width="50%" />
-                  <WireButton variant="primary" label="지금 시작" />
-                </div>
-              </div>
-            )}
+            </div>
           </div>
         </section>
 
@@ -608,26 +684,10 @@ const WireframeSystem: React.FC = () => {
           <h2 className="text-2xl font-bold mb-6 text-gray-900">7. 모달 컴포넌트</h2>
           
           <div className="space-y-4">
-            <div className="flex gap-4">
-              <button
-                onClick={() => setShowModal(true)}
-                className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors"
-              >
-                모달 미리보기
-              </button>
+            <h3 className="text-lg font-semibold mb-4 text-purple-800">모달 와이어프레임</h3>
+            <div className="relative">
+              <WireModal />
             </div>
-            
-            {showModal && (
-              <div className="relative">
-                <WireModal />
-                <button
-                  onClick={() => setShowModal(false)}
-                  className="absolute top-4 right-4 z-10 px-3 py-1 bg-red-500 text-white rounded text-sm"
-                >
-                  닫기
-                </button>
-              </div>
-            )}
           </div>
         </section>
 
@@ -810,4 +870,13 @@ const WireframeSystem: React.FC = () => {
   );
 };
 
-export default WireframeSystem;
+// Export with Error Boundary wrapped
+const WireframeSystemWithErrorBoundary: React.FC = () => {
+  return (
+    <WireframeErrorBoundary>
+      <WireframeSystem />
+    </WireframeErrorBoundary>
+  );
+};
+
+export default WireframeSystemWithErrorBoundary;

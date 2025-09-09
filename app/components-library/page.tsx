@@ -11,15 +11,11 @@ const NoticeBanner = () => (
         </div>
       </div>
       <div>
-        <h3 className="text-amber-800 font-semibold mb-1">⚠️ 시스템 변동 안내</h3>
+        <h3 className="text-amber-800 font-semibold mb-1">📋 시스템 안내</h3>
         <p className="text-amber-700 text-sm leading-relaxed">
-          현재 기획/디자인 시스템은 <strong>개발 진행 중</strong>이며, 사용자 피드백과 기술적 요구사항에 따라 
-          <strong className="text-amber-800"> 언제든 변경될 수 있습니다.</strong> 
+          현재 기획/디자인 시스템은 <strong>개발 진행 중</strong>이며, 사용자 피드백에 따라 <strong className="text-amber-800">언제든 변경될 수 있습니다.</strong><br/>
           최종 구현 시에는 현재 보여지는 디자인과 기능이 달라질 수 있으니 참고해 주시기 바랍니다.
         </p>
-        <div className="mt-2 text-xs text-amber-600">
-          💡 HTML to Figma 변환을 위해 각 컴포넌트의 다양한 상태를 미리 구현해두었습니다.
-        </div>
       </div>
     </div>
   </div>
@@ -1759,10 +1755,10 @@ const ComponentsLibrary: React.FC = () => {
 
         {/* HTML to Figma States Preview */}
         <section className="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl p-8 shadow-lg border border-green-200">
-          <h2 className="text-2xl font-bold mb-6 text-green-900">🎨 HTML to Figma 상태별 컴포넌트 미리보기</h2>
+          <h2 className="text-2xl font-bold mb-6 text-green-900">🎨 상태별 컴포넌트 미리보기</h2>
           <div className="bg-green-100 rounded-lg p-4 mb-6">
             <p className="text-green-800 text-sm">
-              💡 <strong>Figma 변환 최적화</strong>: 각 컴포넌트의 모든 상태를 미리 렌더링하여 HTML to Figma 플러그인에서 완전한 컴포넌트 시스템을 추출할 수 있도록 구성했습니다.
+              🎨 <strong>상태별 컴포넌트 미리보기</strong>: 모든 인터랙션 상태를 한눈에 확인할 수 있도록 구성했습니다.
             </p>
           </div>
           
@@ -2748,8 +2744,16 @@ const ComponentsLibrary: React.FC = () => {
         </section>
 
         {/* 14. Modal Component */}
-        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">14. 모달</h2>
+        <section className="bg-gradient-to-br from-white to-purple-50 rounded-2xl p-8 shadow-lg border border-purple-100">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white text-lg">🪟</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">모달</h2>
+              <p className="text-sm text-gray-500">오버레이 다이얼로그 및 팝업</p>
+            </div>
+          </div>
           
           <div className="space-y-5">
             <div>
@@ -2833,8 +2837,16 @@ const ComponentsLibrary: React.FC = () => {
         </section>
 
         {/* 15. Toast Messages */}
-        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">15. 토스트 메시지</h2>
+        <section className="bg-gradient-to-br from-white to-blue-50 rounded-2xl p-8 shadow-lg border border-blue-100">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white text-lg">💬</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">토스트 메시지</h2>
+              <p className="text-sm text-gray-500">일시적 알림 및 피드백 메시지</p>
+            </div>
+          </div>
           
           <div className="space-y-5">
             <div>
@@ -2911,8 +2923,16 @@ const ComponentsLibrary: React.FC = () => {
         </section>
 
         {/* 17. Alert Dialogs */}
-        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">17. 알럿 다이얼로그</h2>
+        <section className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-lg border border-gray-100">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-gradient-to-br from-red-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white text-lg">⚠️</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">알럿 다이얼로그</h2>
+              <p className="text-sm text-gray-500">사용자 확인이 필요한 중요 메시지</p>
+            </div>
+          </div>
           
           <div className="space-y-5">
             <div>
@@ -2959,8 +2979,16 @@ const ComponentsLibrary: React.FC = () => {
         </section>
 
         {/* 18. Loading Animations */}
-        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">18. 로딩 애니메이션</h2>
+        <section className="bg-gradient-to-br from-white to-green-50 rounded-2xl p-8 shadow-lg border border-green-100">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white text-lg">⚡</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">로딩 애니메이션</h2>
+              <p className="text-sm text-gray-500">진행 상태 및 로딩 표시</p>
+            </div>
+          </div>
           
           <div className="space-y-5">
             <div>
@@ -3002,8 +3030,16 @@ const ComponentsLibrary: React.FC = () => {
         </section>
 
         {/* 19. Table Component */}
-        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">19. 테이블</h2>
+        <section className="bg-gradient-to-br from-white to-slate-50 rounded-2xl p-8 shadow-lg border border-slate-100">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-gradient-to-br from-slate-400 to-gray-600 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white text-lg">📊</span>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-gray-900">테이블</h2>
+              <p className="text-sm text-gray-500">데이터 표시 및 상호작용</p>
+            </div>
+          </div>
           
           <div className="space-y-5">
             <div>

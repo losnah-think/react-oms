@@ -202,4 +202,27 @@ export const Icon3D = {
       </div>
     </div>
   ),
+
+  // 와이어프레임 전용 아이콘
+  Wireframe: () => (
+    <div className="relative inline-block transform hover:scale-110 transition-transform duration-200">
+      <div className="w-8 h-8 bg-gradient-to-br from-gray-300 via-gray-400 to-gray-600 rounded-xl transform rotate-3 shadow-lg">
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-500/30 to-white/40 rounded-xl"></div>
+        <div className="absolute top-1 right-1 w-2 h-2 bg-white/50 rounded-sm"></div>
+        <div className="absolute bottom-1 left-1 w-1 h-1 bg-gray-700/30 rounded-full"></div>
+        <div className="flex items-center justify-center h-full text-white font-bold">📐</div>
+      </div>
+    </div>
+  ),
+
+  Hammer: () => (
+    <div className="relative inline-block transform hover:scale-110 hover:rotate-12 transition-all duration-200">
+      <div className="w-8 h-8 bg-gradient-to-br from-slate-400 via-slate-500 to-slate-700 rounded-xl transform -rotate-6 shadow-lg">
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-600/30 to-white/30 rounded-xl"></div>
+        <div className="absolute top-1 left-1 w-2 h-2 bg-white/40 rounded-sm"></div>
+        <div className="absolute bottom-1 right-1 w-1 h-3 bg-slate-800/20 rounded-full"></div>
+        <div className="flex items-center justify-center h-full text-white font-bold">🔨</div>
+      </div>
+    </div>
+  ),
 };
