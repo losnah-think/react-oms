@@ -1013,7 +1013,7 @@ const ComponentsLibrary: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-8">
-      <div className="max-w-7xl mx-auto space-y-12">
+      <div className="max-w-7xl mx-auto space-y-10">
         
         {/* Header */}
         <div 
@@ -1071,7 +1071,7 @@ const ComponentsLibrary: React.FC = () => {
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">1. 타이포그래피 시스템</h2>
           
-          <div className="space-y-8">
+          <div className="space-y-5">
             {/* Font Family */}
             <div>
               <h3 className="text-lg font-semibold mb-4 text-gray-700">폰트 패밀리: Pretendard</h3>
@@ -1137,29 +1137,31 @@ const ComponentsLibrary: React.FC = () => {
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">2. 컬러 시스템</h2>
           
-          <div className="space-y-8">
+          <div className="space-y-5">
             {/* Primary Colors */}
             <div>
               <h3 className="text-lg font-semibold mb-4 text-gray-700">Primary Colors</h3>
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 {[
-                  { name: 'blue-50', color: '#eff6ff', text: 'dark' },
-                  { name: 'blue-100', color: '#dbeafe', text: 'dark' },
-                  { name: 'blue-500', color: '#3b82f6', text: 'light' },
-                  { name: 'blue-600', color: '#2563eb', text: 'light' },
-                  { name: 'blue-700', color: '#1d4ed8', text: 'light' },
+                  { name: 'Primary Blue', color: '#007BED', text: 'light', usage: '주요 액션, 링크' },
+                  { name: 'Background Blue', color: '#EBF5FF', text: 'dark', usage: '배경, 하이라이트' },
+                  { name: 'Soft Blue', color: '#5281C8', text: 'light', usage: '보조 액션' },
+                  { name: 'Point Red', color: '#F34161', text: 'light', usage: '알림, 강조' },
+                  { name: 'White', color: '#FFFFFF', text: 'dark', usage: '배경, 카드' },
                 ].map((item) => (
                   <div key={item.name} className="text-center">
                     <div 
-                      className="w-full h-20 rounded-lg shadow-md mb-2 flex items-center justify-center text-sm font-mono"
+                      className="w-full h-20 rounded-lg shadow-md mb-2 flex items-center justify-center text-xs font-mono border"
                       style={{ 
                         backgroundColor: item.color,
-                        color: item.text === 'light' ? 'white' : '#374151'
+                        color: item.text === 'light' ? 'white' : '#374151',
+                        borderColor: item.color === '#FFFFFF' ? '#e5e7eb' : 'transparent'
                       }}
                     >
                       {item.color}
                     </div>
-                    <p className="text-sm font-medium text-gray-600">{item.name}</p>
+                    <p className="text-sm font-bold text-gray-800">{item.name}</p>
+                    <p className="text-xs text-gray-600">{item.usage}</p>
                   </div>
                 ))}
               </div>
@@ -1168,26 +1170,26 @@ const ComponentsLibrary: React.FC = () => {
             {/* Gray Scale */}
             <div>
               <h3 className="text-lg font-semibold mb-4 text-gray-700">Gray Scale</h3>
-              <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
-                  { name: 'gray-50', color: '#f9fafb', text: 'dark' },
-                  { name: 'gray-100', color: '#f3f4f6', text: 'dark' },
-                  { name: 'gray-300', color: '#d1d5db', text: 'dark' },
-                  { name: 'gray-500', color: '#6b7280', text: 'light' },
-                  { name: 'gray-700', color: '#374151', text: 'light' },
-                  { name: 'gray-900', color: '#111827', text: 'light' },
+                  { name: 'Black', color: '#06101D', text: 'light', usage: '제목, 본문 텍스트' },
+                  { name: 'Gray', color: '#55585E', text: 'light', usage: '보조 텍스트, 레이블' },
+                  { name: 'Light Gray', color: '#F0F0F0', text: 'dark', usage: '구분선, 비활성' },
+                  { name: 'White', color: '#FFFFFF', text: 'dark', usage: '배경, 카드' },
                 ].map((item) => (
                   <div key={item.name} className="text-center">
                     <div 
-                      className="w-full h-16 rounded-lg shadow-md mb-2 flex items-center justify-center text-xs font-mono"
+                      className="w-full h-20 rounded-lg shadow-md mb-2 flex items-center justify-center text-xs font-mono border"
                       style={{ 
                         backgroundColor: item.color,
-                        color: item.text === 'light' ? 'white' : '#374151'
+                        color: item.text === 'light' ? 'white' : '#374151',
+                        borderColor: item.color === '#FFFFFF' ? '#e5e7eb' : 'transparent'
                       }}
                     >
                       {item.color}
                     </div>
-                    <p className="text-sm font-medium text-gray-600">{item.name}</p>
+                    <p className="text-sm font-bold text-gray-800">{item.name}</p>
+                    <p className="text-xs text-gray-600">{item.usage}</p>
                   </div>
                 ))}
               </div>
@@ -1200,12 +1202,12 @@ const ComponentsLibrary: React.FC = () => {
                 {[
                   { name: 'Success', color: '#10b981', usage: '성공, 완료, 승인' },
                   { name: 'Warning', color: '#f59e0b', usage: '주의, 대기, 알림' },
-                  { name: 'Error', color: '#ef4444', usage: '오류, 거부, 삭제' },
-                  { name: 'Info', color: '#3b82f6', usage: '정보, 링크, 액션' },
+                  { name: 'Error', color: '#F34161', usage: '오류, 거부, 삭제' },
+                  { name: 'Info', color: '#007BED', usage: '정보, 링크, 액션' },
                 ].map((item) => (
                   <div key={item.name} className="text-center bg-gray-50 rounded-lg p-4">
                     <div 
-                      className="w-full h-16 rounded-lg shadow-md mb-3 flex items-center justify-center text-white text-xs font-mono"
+                      className="w-full h-20 rounded-lg shadow-md mb-3 flex items-center justify-center text-white text-xs font-mono"
                       style={{ backgroundColor: item.color }}
                     >
                       {item.color}
@@ -1215,6 +1217,18 @@ const ComponentsLibrary: React.FC = () => {
                   </div>
                 ))}
               </div>
+
+              {/* 컬러 사용 가이드 */}
+              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+                <h4 className="font-semibold text-gray-900 mb-2">컬러 사용 가이드</h4>
+                <ul className="text-sm text-gray-700 space-y-1">
+                  <li>• Primary Blue (#007BED): 주요 CTA 버튼, 링크, 활성 상태</li>
+                  <li>• Black (#06101D): 제목, 중요한 텍스트, 아이콘</li>
+                  <li>• Gray (#55585E): 본문 텍스트, 설명, 레이블</li>
+                  <li>• Light Gray (#F0F0F0): 구분선, 비활성 상태, 배경</li>
+                  <li>• Point Red (#F34161): 에러, 경고, 삭제 액션</li>
+                </ul>
+              </div>
             </div>
           </div>
         </section>
@@ -1223,7 +1237,7 @@ const ComponentsLibrary: React.FC = () => {
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">3. 아이콘 시스템</h2>
           
-          <div className="space-y-8">
+          <div className="space-y-5">
             {/* Icon Style Guide */}
             <div>
               <h3 className="text-lg font-semibold mb-4 text-gray-700">아이콘 스타일 가이드</h3>
@@ -1292,7 +1306,7 @@ const ComponentsLibrary: React.FC = () => {
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">4. 레이아웃 시스템</h2>
           
-          <div className="space-y-8">
+          <div className="space-y-5">
             {/* Grid System */}
             <div>
               <h3 className="text-lg font-semibold mb-4 text-gray-700">그리드 시스템</h3>
@@ -1547,7 +1561,7 @@ const ComponentsLibrary: React.FC = () => {
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">8. 상품 카드 (옵션 테이블 포함)</h2>
           
-          <div className="space-y-8">
+          <div className="space-y-5">
             
             {/* Card Variants */}
             <div>
@@ -1608,7 +1622,7 @@ const ComponentsLibrary: React.FC = () => {
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
           <h2 className="text-2xl font-bold mb-6 text-gray-900">9. 페이지네이션</h2>
           
-          <div className="space-y-8">
+          <div className="space-y-5">
             <div>
               <h3 className="text-lg font-semibold mb-4 text-gray-700">크기별 페이지네이션</h3>
               

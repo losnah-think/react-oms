@@ -5,6 +5,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // 브랜드 컬러 시스템
+      colors: {
+        brand: {
+          primary: '#007BED',      // Primary Blue
+          black: '#06101D',        // Black
+          gray: '#55585E',         // Gray
+          'light-gray': '#F0F0F0', // Light Gray
+          'bg-blue': '#EBF5FF',    // Background Blue
+          'soft-blue': '#5281C8',  // Soft Blue
+          'point-red': '#F34161',  // Point Red
+        }
+      },
       // Pretendard 폰트 패밀리
       fontFamily: {
         'sans': [
