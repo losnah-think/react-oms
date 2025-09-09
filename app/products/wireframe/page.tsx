@@ -353,78 +353,81 @@ const ProductManagementWireframe: React.FC = () => {
           >
             {/* 상품 카드 예시 (3개) */}
             {[1, 2, 3].map((item) => (
-              <div key={item} className="mb-4">
-                <WireframeBox label={`PRODUCT_CARD_${item}`} className="grid grid-cols-24 gap-4 items-center p-4">
-                  {/* 체크박스 */}
-                  <div className="col-span-1">
-                    <WireframeBox label="CHECKBOX">
-                      <input type="checkbox" className="w-4 h-4" />
-                    </WireframeBox>
-                  </div>
-                  
-                  {/* 상품 이미지 */}
-                  <div className="col-span-3">
-                    <WireframeBox label="PRODUCT_IMAGE">
-                      <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                        <span className="text-gray-400 text-xs">이미지</span>
-                      </div>
-                    </WireframeBox>
-                  </div>
-                  
-                  {/* 상품 정보 */}
-                  <div className="col-span-10">
-                    <WireframeBox label="PRODUCT_INFO">
-                      <div className="space-y-2">
-                        <h3 className="font-semibold text-gray-800">프리미엄 코튼 티셔츠 {item}</h3>
-                        <div className="flex gap-4 text-sm text-gray-600">
-                          <span>코드: PRD{item.toString().padStart(3, '0')}</span>
-                          <span>카테고리: 상의</span>
-                          <span>브랜드: 베이직웨어</span>
+              <div key={item} className="mb-6 last:mb-0">
+                <WireframeBox label={`PRODUCT_CARD_${item}`} className="p-4">
+                  <div className="grid grid-cols-24 gap-4 items-stretch min-h-[120px]">
+                    {/* 체크박스 */}
+                    <div className="col-span-1 flex items-start pt-2">
+                      <WireframeBox label="CHECKBOX">
+                        <input type="checkbox" className="w-4 h-4" />
+                      </WireframeBox>
+                    </div>
+                    
+                    {/* 상품 이미지 */}
+                    <div className="col-span-3 flex items-center">
+                      <WireframeBox label="PRODUCT_IMAGE" className="w-full">
+                        <div className="w-20 h-20 mx-auto bg-gray-200 rounded-lg flex items-center justify-center">
+                          <span className="text-gray-400 text-xs">이미지</span>
                         </div>
-                        <div className="flex gap-2">
-                          <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">판매중</span>
-                          <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">재고관리</span>
+                      </WireframeBox>
+                    </div>
+                    
+                    {/* 상품 정보 */}
+                    <div className="col-span-10 flex items-center">
+                      <WireframeBox label="PRODUCT_INFO" className="w-full">
+                        <div className="space-y-2">
+                          <h3 className="font-semibold text-gray-800 text-lg">프리미엄 코튼 티셔츠 {item}</h3>
+                          <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                            <span>코드: PRD{item.toString().padStart(3, '0')}</span>
+                            <span>카테고리: 상의</span>
+                            <span>브랜드: 베이직웨어</span>
+                            <span>등록일: 2025-09-0{item}</span>
+                          </div>
+                          <div className="flex gap-2 pt-1">
+                            <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">판매중</span>
+                            <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">재고관리</span>
+                          </div>
                         </div>
-                      </div>
-                    </WireframeBox>
-                  </div>
-                  
-                  {/* 재고 정보 */}
-                  <div className="col-span-3">
-                    <WireframeBox label="STOCK_INFO">
-                      <div className="text-center space-y-1">
-                        <div className="text-sm font-semibold">재고: 150개</div>
-                        <div className="text-xs text-gray-500">안전재고: 20개</div>
-                        <div className="text-xs text-red-600">부족: 5개</div>
-                      </div>
-                    </WireframeBox>
-                  </div>
-                  
-                  {/* 가격 정보 */}
-                  <div className="col-span-4">
-                    <WireframeBox label="PRICE_INFO">
-                      <div className="text-right space-y-1">
-                        <div className="text-lg font-bold text-blue-600">₩29,000</div>
-                        <div className="text-xs text-gray-500">원가: ₩15,000</div>
-                        <div className="text-xs text-green-600">마진: ₩14,000 (48%)</div>
-                      </div>
-                    </WireframeBox>
-                  </div>
-                  
-                  {/* 액션 버튼 */}
-                  <div className="col-span-3">
-                    <WireframeBox label="ACTION_BUTTONS" className="flex gap-1 justify-center">
-                      <button className="p-2 text-blue-500 hover:bg-blue-50 rounded">📝</button>
-                      <button className="p-2 text-green-500 hover:bg-green-50 rounded">📋</button>
-                      <button className="p-2 text-red-500 hover:bg-red-50 rounded">🗑️</button>
-                    </WireframeBox>
+                      </WireframeBox>
+                    </div>
+                    
+                    {/* 재고 정보 */}
+                    <div className="col-span-3 flex items-center">
+                      <WireframeBox label="STOCK_INFO" className="w-full">
+                        <div className="text-center space-y-1 py-2">
+                          <div className="text-sm font-semibold text-gray-800">재고: 150개</div>
+                          <div className="text-xs text-gray-500">안전재고: 20개</div>
+                          <div className="text-xs text-red-600">부족: 5개</div>
+                        </div>
+                      </WireframeBox>
+                    </div>
+                    
+                    {/* 가격 정보 */}
+                    <div className="col-span-4 flex items-center">
+                      <WireframeBox label="PRICE_INFO" className="w-full">
+                        <div className="text-right space-y-1 py-2">
+                          <div className="text-xl font-bold text-blue-600">₩{(29000 + item * 1000).toLocaleString()}</div>
+                          <div className="text-xs text-gray-500">원가: ₩{(15000 + item * 500).toLocaleString()}</div>
+                          <div className="text-xs text-green-600">마진: ₩{(14000 + item * 500).toLocaleString()} (48%)</div>
+                        </div>
+                      </WireframeBox>
+                    </div>
+                    
+                    {/* 액션 버튼 */}
+                    <div className="col-span-3 flex items-center justify-center">
+                      <WireframeBox label="ACTION_BUTTONS" className="flex flex-col gap-2 w-full">
+                        <button className="w-full py-1 px-2 text-blue-500 hover:bg-blue-50 rounded text-xs border border-blue-200">편집</button>
+                        <button className="w-full py-1 px-2 text-green-500 hover:bg-green-50 rounded text-xs border border-green-200">복사</button>
+                        <button className="w-full py-1 px-2 text-red-500 hover:bg-red-50 rounded text-xs border border-red-200">삭제</button>
+                      </WireframeBox>
+                    </div>
                   </div>
                 </WireframeBox>
               </div>
             ))}
             
             {/* 로딩 상태 */}
-            <WireframeBox label="LOADING_STATE" className="text-center py-8">
+            <WireframeBox label="LOADING_STATE" className="text-center py-8 mt-6">
               <div className="inline-block w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
               <p className="text-gray-600 mt-2">상품 목록을 불러오는 중...</p>
             </WireframeBox>
@@ -655,9 +658,271 @@ const ProductManagementWireframe: React.FC = () => {
           </div>
         </section>
 
-        {/* 8. 사용자 시나리오 */}
+        {/* 8. 피그마 컴포넌트 가이드 */}
+        <section className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 p-8 rounded-2xl">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-white text-2xl">🎨</span>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">피그마 컴포넌트 정리</h2>
+              <p className="text-purple-600 text-sm">디자인 시스템으로 바로 가져가기</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* 주요 컴포넌트 정리 */}
+            <div className="space-y-6">
+              <SpecBox title="🔧 핵심 컴포넌트 (8개)">
+                <div className="space-y-3">
+                  {/* SearchBar Component */}
+                  <div className="bg-white p-4 rounded-lg border-2 border-dashed border-blue-300">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="bg-blue-500 text-white px-2 py-1 text-xs rounded font-bold">SearchBar</span>
+                      <span className="text-xs text-gray-500">Width: 320px, Height: 40px</span>
+                    </div>
+                    <div className="relative">
+                      <div className="w-full h-10 bg-white border-2 border-gray-300 rounded-lg flex items-center px-3 text-sm text-gray-500">
+                        🔍 상품명, 코드 검색...
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* FilterDropdown Component */}
+                  <div className="bg-white p-4 rounded-lg border-2 border-dashed border-green-300">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="bg-green-500 text-white px-2 py-1 text-xs rounded font-bold">FilterDropdown</span>
+                      <span className="text-xs text-gray-500">Width: 160px, Height: 40px</span>
+                    </div>
+                    <select className="w-full h-10 border-2 border-gray-300 rounded-lg px-3 text-sm">
+                      <option>카테고리 선택</option>
+                      <option>상의</option>
+                      <option>하의</option>
+                    </select>
+                  </div>
+
+                  {/* ActionButton Component */}
+                  <div className="bg-white p-4 rounded-lg border-2 border-dashed border-purple-300">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="bg-purple-500 text-white px-2 py-1 text-xs rounded font-bold">ActionButton</span>
+                      <span className="text-xs text-gray-500">Width: 120px, Height: 40px</span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button className="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium">Primary</button>
+                      <button className="px-4 py-2 bg-gray-100 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium">Secondary</button>
+                    </div>
+                  </div>
+
+                  {/* ProductCard Component */}
+                  <div className="bg-white p-4 rounded-lg border-2 border-dashed border-orange-300">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="bg-orange-500 text-white px-2 py-1 text-xs rounded font-bold">ProductCard</span>
+                      <span className="text-xs text-gray-500">Width: 100%, Height: 120px</span>
+                    </div>
+                    <div className="border border-gray-200 rounded-lg p-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-gray-200 rounded"></div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-sm">상품명</h4>
+                          <p className="text-xs text-gray-500">코드: PRD001</p>
+                        </div>
+                        <div className="text-right">
+                          <div className="font-bold text-blue-600">₩29,000</div>
+                          <div className="text-xs text-gray-500">재고: 150개</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </SpecBox>
+
+              <SpecBox title="📐 레이아웃 그리드">
+                <div className="space-y-3">
+                  <div className="bg-white p-4 rounded-lg border">
+                    <h4 className="font-semibold text-sm mb-2">24-Column Grid System</h4>
+                    <div className="grid grid-cols-24 gap-1">
+                      {Array.from({length: 24}, (_, i) => (
+                        <div key={i} className="h-4 bg-blue-100 text-xs flex items-center justify-center text-blue-600">
+                          {i + 1}
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-gray-500 mt-2">Gutter: 16px, Max-width: 1200px</p>
+                  </div>
+
+                  <div className="bg-white p-4 rounded-lg border">
+                    <h4 className="font-semibold text-sm mb-2">Spacing Scale</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-4">
+                        <div className="w-1 h-4 bg-blue-500"></div>
+                        <span className="text-xs">4px - xs</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-2 h-4 bg-blue-500"></div>
+                        <span className="text-xs">8px - sm</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-4 h-4 bg-blue-500"></div>
+                        <span className="text-xs">16px - md</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-6 h-4 bg-blue-500"></div>
+                        <span className="text-xs">24px - lg</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-8 h-4 bg-blue-500"></div>
+                        <span className="text-xs">32px - xl</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </SpecBox>
+            </div>
+
+            {/* 컬러 & 타이포그래피 */}
+            <div className="space-y-6">
+              <SpecBox title="🎨 컬러 팔레트">
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-sm mb-2">Primary Colors</h4>
+                    <div className="grid grid-cols-5 gap-2">
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-blue-500 rounded-lg mb-1"></div>
+                        <p className="text-xs">#007BED</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-green-500 rounded-lg mb-1"></div>
+                        <p className="text-xs">#10b981</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-yellow-500 rounded-lg mb-1"></div>
+                        <p className="text-xs">#f59e0b</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-red-500 rounded-lg mb-1"></div>
+                        <p className="text-xs">#ef4444</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-gray-500 rounded-lg mb-1"></div>
+                        <p className="text-xs">#6b7280</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-sm mb-2">Gray Scale</h4>
+                    <div className="grid grid-cols-6 gap-2">
+                      <div className="text-center">
+                        <div className="w-10 h-10 bg-gray-100 rounded mb-1"></div>
+                        <p className="text-xs">100</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-10 h-10 bg-gray-200 rounded mb-1"></div>
+                        <p className="text-xs">200</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-10 h-10 bg-gray-300 rounded mb-1"></div>
+                        <p className="text-xs">300</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-10 h-10 bg-gray-500 rounded mb-1"></div>
+                        <p className="text-xs">500</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-10 h-10 bg-gray-700 rounded mb-1"></div>
+                        <p className="text-xs">700</p>
+                      </div>
+                      <div className="text-center">
+                        <div className="w-10 h-10 bg-gray-900 rounded mb-1"></div>
+                        <p className="text-xs">900</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </SpecBox>
+
+              <SpecBox title="📝 Typography Scale">
+                <div className="space-y-3">
+                  <div className="text-3xl font-bold text-gray-900">Heading 1 - 30px</div>
+                  <div className="text-2xl font-bold text-gray-900">Heading 2 - 24px</div>
+                  <div className="text-xl font-semibold text-gray-900">Heading 3 - 20px</div>
+                  <div className="text-lg font-semibold text-gray-900">Heading 4 - 18px</div>
+                  <div className="text-base text-gray-900">Body Large - 16px</div>
+                  <div className="text-sm text-gray-900">Body Medium - 14px</div>
+                  <div className="text-xs text-gray-600">Caption - 12px</div>
+                </div>
+                <div className="mt-4 p-3 bg-gray-100 rounded">
+                  <p className="text-xs text-gray-700">
+                    <strong>Font Family:</strong> Pretendard, -apple-system, BlinkMacSystemFont, sans-serif
+                  </p>
+                </div>
+              </SpecBox>
+
+              <SpecBox title="🔄 Component States">
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-sm mb-2">Button States</h4>
+                    <div className="flex gap-2 flex-wrap">
+                      <button className="px-3 py-2 bg-blue-500 text-white rounded text-sm">Normal</button>
+                      <button className="px-3 py-2 bg-blue-600 text-white rounded text-sm">Hover</button>
+                      <button className="px-3 py-2 bg-blue-700 text-white rounded text-sm">Active</button>
+                      <button className="px-3 py-2 bg-gray-300 text-gray-500 rounded text-sm">Disabled</button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-sm mb-2">Input States</h4>
+                    <div className="space-y-2">
+                      <input className="w-full px-3 py-2 border border-gray-300 rounded" placeholder="Normal" />
+                      <input className="w-full px-3 py-2 border-2 border-blue-500 rounded" placeholder="Focused" />
+                      <input className="w-full px-3 py-2 border-2 border-red-500 rounded" placeholder="Error" />
+                    </div>
+                  </div>
+                </div>
+              </SpecBox>
+            </div>
+          </div>
+
+          {/* 피그마 Export 가이드 */}
+          <div className="mt-8 bg-white p-6 rounded-xl border-2 border-purple-200">
+            <h3 className="text-lg font-bold text-purple-900 mb-4">🚀 피그마 Export 가이드</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-2">
+                <h4 className="font-semibold text-purple-800">1. 컴포넌트 분리</h4>
+                <ul className="text-sm text-purple-700 space-y-1">
+                  <li>• SearchBar → Auto Layout</li>
+                  <li>• FilterDropdown → Component</li>
+                  <li>• ProductCard → Master Component</li>
+                  <li>• ActionButton → Button Variants</li>
+                </ul>
+              </div>
+              
+              <div className="space-y-2">
+                <h4 className="font-semibold text-purple-800">2. Design Tokens</h4>
+                <ul className="text-sm text-purple-700 space-y-1">
+                  <li>• Color Styles → 팔레트 등록</li>
+                  <li>• Text Styles → 타이포그래피</li>
+                  <li>• Effect Styles → 그림자/보더</li>
+                  <li>• Grid Styles → 24컬럼 그리드</li>
+                </ul>
+              </div>
+              
+              <div className="space-y-2">
+                <h4 className="font-semibold text-purple-800">3. 반응형 설정</h4>
+                <ul className="text-sm text-purple-700 space-y-1">
+                  <li>• Desktop: 1200px+</li>
+                  <li>• Tablet: 768px - 1199px</li>
+                  <li>• Mobile: 320px - 767px</li>
+                  <li>• Auto Layout → Fill container</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 9. 사용자 시나리오 */}
         <section className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-2xl">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">8. 📝 사용자 시나리오 및 테스트 케이스</h2>
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">9. 📝 사용자 시나리오 및 테스트 케이스</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <SpecBox title="👤 주요 사용자 플로우">
@@ -713,45 +978,7 @@ const ProductManagementWireframe: React.FC = () => {
           </div>
         </section>
 
-        {/* 9. 개발 우선순위 */}
-        <section className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-6 rounded-2xl">
-          <h2 className="text-2xl font-bold mb-6">9. 🎯 개발 우선순위 및 마일스톤</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <h3 className="font-bold text-lg mb-3">Phase 1 (1-2주)</h3>
-              <ul className="text-sm space-y-1 opacity-90">
-                <li>✓ 기본 상품 목록 조회</li>
-                <li>✓ 검색 기능</li>
-                <li>✓ 기본 필터링</li>
-                <li>✓ 상품 카드 컴포넌트</li>
-                <li>✓ 페이지네이션</li>
-              </ul>
-            </div>
-            
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <h3 className="font-bold text-lg mb-3">Phase 2 (3-4주)</h3>
-              <ul className="text-sm space-y-1 opacity-90">
-                <li>• 고급 필터링</li>
-                <li>• 일괄 선택/액션</li>
-                <li>• 상품 편집 패널</li>
-                <li>• 이미지 업로드</li>
-                <li>• 폼 유효성 검사</li>
-              </ul>
-            </div>
-            
-            <div className="bg-white/10 backdrop-blur rounded-xl p-4">
-              <h3 className="font-bold text-lg mb-3">Phase 3 (5-6주)</h3>
-              <ul className="text-sm space-y-1 opacity-90">
-                <li>• 엑셀 업로드/다운로드</li>
-                <li>• 성능 최적화</li>
-                <li>• 모바일 최적화</li>
-                <li>• 접근성 개선</li>
-                <li>• 테스트 코드</li>
-              </ul>
-            </div>
-          </div>
-        </section>
+
 
       </div>
     </div>
