@@ -323,42 +323,8 @@ const WireModal: React.FC<{
 // Main Wireframe System Page
 const WireframeSystem: React.FC = () => {
   useEffect(() => {
-    // 페이지 로드 시 JavaScript 에러로 인한 알럿 방지
-    const originalAlert = window.alert;
-    const originalConfirm = window.confirm;
-    
-    // alert와 confirm을 일시적으로 오버라이드
-    window.alert = (message) => {
-      console.log('Alert blocked:', message);
-      return;
-    };
-    
-    window.confirm = (message) => {
-      console.log('Confirm blocked:', message);
-      return true; // 기본값으로 true 반환
-    };
-
-    const handleError = (event: ErrorEvent) => {
-      console.error('Wireframe page error caught:', event.error);
-      event.preventDefault(); // 브라우저 기본 알럿 방지
-      return false;
-    };
-
-    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      console.error('Unhandled promise rejection:', event.reason);
-      event.preventDefault(); // 브라우저 기본 알럿 방지
-    };
-
-    window.addEventListener('error', handleError);
-    window.addEventListener('unhandledrejection', handleUnhandledRejection);
-    
-    return () => {
-      // 정리 시 원래 함수들 복원
-      window.alert = originalAlert;
-      window.confirm = originalConfirm;
-      window.removeEventListener('error', handleError);
-      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
-    };
+    // 페이지 로드 완료 로그
+    console.log('✅ 와이어프레임 시스템 페이지 로드 완료');
   }, []);
 
   return (

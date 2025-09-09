@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -137,6 +137,12 @@ const ProductCard: React.FC<{
 }> = ({ product, selected, onToggleSelect }) => {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+  
   const hasMulti = product.variants.length > 1;
   const firstV = product.variants[0];
 
@@ -170,10 +176,14 @@ const ProductCard: React.FC<{
               </div>
               <div className="mt-2 flex items-center gap-2 flex-wrap text-xs">
                 <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-gray-600 bg-white/70">코드: {product.code.split(",")[0]}</span>
-                <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-gray-600 bg-white/70">옵션 {product.variants.length}개</span>
-                {firstV?.barcode?.length ? (
-                  <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-gray-600 bg-white/70">바코드 {firstV.barcode.length}개(대표)</span>
-                ) : null}
+                {isClient && (
+                  <>
+                    <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-gray-600 bg-white/70">옵션 {product.variants.length}개</span>
+                    {firstV?.barcode?.length ? (
+                      <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-gray-600 bg-white/70">바코드 {firstV.barcode.length}개(대표)</span>
+                    ) : null}
+                  </>
+                )}
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -183,7 +193,7 @@ const ProductCard: React.FC<{
           </div>
 
           {/* Single variant summary */}
-          {!hasMulti && (
+          {isClient && !hasMulti && (
             <div className="mt-3 rounded-xl border bg-gray-50 p-3">
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-700">
                 {firstV.attrs["기본옵션"] ? (
@@ -208,7 +218,7 @@ const ProductCard: React.FC<{
           )}
 
           {/* Multi variants table */}
-          {hasMulti && (
+          {isClient && hasMulti && (
             <div className="mt-3">
               <button
                 onClick={(e) => {e.stopPropagation(); setExpanded((v) => !v);}}
