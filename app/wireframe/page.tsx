@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, ErrorInfo } from "react";
+import React, { useEffect, ErrorInfo, useState } from "react";
 
 // Error Boundary Component
 class WireframeErrorBoundary extends React.Component<
@@ -287,19 +287,74 @@ const WireModal: React.FC<{
   hasHeader?: boolean;
   hasFooter?: boolean;
 }> = ({ size = 'medium', hasHeader = true, hasFooter = true }) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  
   const sizes = {
     small: 'max-w-md',
     medium: 'max-w-lg', 
     large: 'max-w-2xl'
   };
 
+  // ESC 키로 모달 닫기
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      // 배경 스크롤 방지
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      setIsOpen(false);
+    }
+  };
+
+  if (!isOpen) {
+    return (
+      <div className="space-y-4">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="w-full px-4 py-3 bg-gradient-to-r from-purple-100 to-indigo-100 border-2 border-dashed border-purple-300 rounded-lg text-purple-700 hover:from-purple-200 hover:to-indigo-200 transition-all duration-200 font-medium"
+        >
+          📱 모달 와이어프레임 보기 (클릭)
+        </button>
+        <p className="text-xs text-gray-500 text-center">
+          💡 ESC 키 또는 배경 클릭으로 닫을 수 있습니다
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className="fixed inset-0 bg-black/20 flex items-center justify-center p-4">
-      <div className={`bg-white border-2 border-dashed border-gray-300 rounded-lg w-full ${sizes[size]}`}>
+    <div 
+      className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+      onClick={handleBackdropClick}
+    >
+      <div 
+        className={`bg-white border-2 border-dashed border-gray-300 rounded-lg w-full ${sizes[size]} transform transition-all duration-200 scale-100`}
+        onClick={(e) => e.stopPropagation()}
+      >
         {hasHeader && (
           <div className="border-b-2 border-dashed border-gray-300 p-4 flex justify-between items-center">
             <div className="h-5 bg-gray-400 rounded w-32"></div>
-            <div className="w-6 h-6 bg-gray-300 rounded"></div>
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="w-6 h-6 bg-red-200 rounded hover:bg-red-300 flex items-center justify-center text-red-600 text-sm font-bold transition-colors"
+            >
+              ×
+            </button>
           </div>
         )}
         <div className="p-6 space-y-4">
@@ -308,11 +363,25 @@ const WireModal: React.FC<{
             <div className="h-4 bg-gray-300 rounded w-4/5"></div>
             <div className="h-4 bg-gray-300 rounded w-3/5"></div>
           </div>
+          <div className="text-center">
+            <p className="text-sm text-gray-600 mb-2">와이어프레임 모달 예시</p>
+            <p className="text-xs text-gray-400">ESC 키 또는 배경을 클릭하여 닫으세요</p>
+          </div>
         </div>
         {hasFooter && (
           <div className="border-t-2 border-dashed border-gray-300 p-4 flex justify-end space-x-3">
-            <div className="h-8 bg-gray-200 rounded w-16"></div>
-            <div className="h-8 bg-brand-primary/30 rounded w-16"></div>
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="h-8 bg-gray-200 rounded w-16 hover:bg-gray-300 transition-colors text-xs"
+            >
+              취소
+            </button>
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="h-8 bg-brand-primary/30 rounded w-16 hover:bg-brand-primary/50 transition-colors text-xs"
+            >
+              확인
+            </button>
           </div>
         )}
       </div>
