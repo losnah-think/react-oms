@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS 변수로 브랜드 색상 정의 */
+:root {
+  --brand-primary: #007BED;
+  --brand-secondary: #5281C8;
+  --brand-background: #EBF5FF;
+  --brand-point: #F34161;
+}
+
 /* 커스텀 애니메이션 */
 @keyframes slide-in-right {
   from {
