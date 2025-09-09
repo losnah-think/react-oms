@@ -30,6 +30,7 @@ const Sidebar: React.FC = () => {
       subItems: [
         { title: "상품 목록", href: "/products", active: true },
         { title: "📋 상품관리 와이어프레임", href: "/products/wireframe", active: true },
+        { title: "⚡ 심플 와이어프레임", href: "/products/simple-wireframe", active: true },
         { title: "CSV 상품 등록", href: "/products/csv-upload", active: true },
         { title: "상품 정보 자동 불러오기", href: "/products/api-integration", active: true },
       ]
