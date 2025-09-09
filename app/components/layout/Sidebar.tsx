@@ -13,7 +13,7 @@ const Sidebar: React.FC = () => {
       icon: <Icon3D.Components />, 
       href: "/components-library", 
       active: true,
-      badge: "미리보기",
+      badge: "활성화",
       subItems: []
     },
     { 

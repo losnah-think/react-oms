@@ -54,10 +54,10 @@ export default function Home() {
 
         {/* Call to Action */}
         <div className="text-center bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl p-12 text-white">
-          <h2 className="text-3xl font-bold mb-4">프로젝트 제안서</h2>
+          <h2 className="text-3xl font-bold mb-4">디자인 시스템</h2>
           <p className="text-lg mb-8 opacity-90">
-            이 페이지는 고객사 제안을 위한 데모 버전입니다.<br/>
-            실제 개발에서는 더욱 풍부한 기능과 최적화된 성능을 제공합니다.
+            체계적이고 일관된 디자인을 위한 컴포넌트 라이브러리<br/>
+            재사용 가능한 UI 요소들과 디자인 토큰을 확인하세요.
           </p>
           <Link href="/components-library">
             <Button 

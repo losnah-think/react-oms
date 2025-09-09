@@ -17,11 +17,11 @@ const Header: React.FC = () => {
                 <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                   React OMS
                 </h1>
-                <span className="px-2 py-1 bg-gradient-to-r from-orange-400 to-pink-400 text-white text-xs rounded-full font-bold shadow-sm animate-pulse">
-                  DEMO
+                <span className="px-2 py-1 bg-gradient-to-r from-blue-400 to-purple-500 text-white text-xs rounded-full font-bold shadow-sm">
+                  v2.0
                 </span>
               </div>
-              <p className="text-xs text-gray-500 font-medium">Design Proposal Version</p>
+              <p className="text-xs text-gray-500 font-medium">Order Management System</p>
             </div>
           </div>
 

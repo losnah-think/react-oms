@@ -1045,14 +1045,6 @@ const ComponentsLibrary: React.FC = () => {
           </div>
 
           <div className="relative z-10">
-            {/* 제안서 배지 */}
-            <div className="mb-4 flex justify-center">
-              <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-400 to-pink-500 text-white rounded-full font-bold shadow-lg transform hover:scale-105 transition-all duration-200 animate-pulse">
-                📋 DESIGN PROPOSAL
-                <span className="bg-white/20 px-3 py-1 rounded-full text-sm">고객사 제안</span>
-              </span>
-            </div>
-            
             <h1 
               className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 mb-6 transform hover:scale-105 transition-transform duration-300"
               style={{
@@ -1062,7 +1054,7 @@ const ComponentsLibrary: React.FC = () => {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              🎨 UI 컴포넌트 라이브러리
+              🎨 디자인 시스템
             </h1>
             <p 
               className="text-xl text-gray-700 max-w-3xl mx-auto font-medium leading-relaxed mb-4"
@@ -1070,27 +1062,331 @@ const ComponentsLibrary: React.FC = () => {
                 textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
               }}
             >
-              피그마 컴포넌트 변환을 위한 완전한 3D UI 패턴 모음집입니다. 
-              각 컴포넌트는 다양한 상태와 variant를 제공하며, 3D 일러스트레이션으로 더욱 생동감 있게 구성되었습니다.
+              체계적이고 일관된 사용자 경험을 위한 UI 컴포넌트 라이브러리입니다.<br/>
+              재사용 가능한 컴포넌트, 디자인 토큰, 아이콘 시스템을 제공합니다.
             </p>
-            
-            {/* 제안서 안내 메시지 */}
-            <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 max-w-2xl mx-auto">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-2xl">💡</span>
-                <h3 className="font-bold text-blue-900">이 페이지는 디자인 제안서입니다</h3>
-              </div>
-              <p className="text-blue-700 text-sm leading-relaxed">
-                실제 개발에서는 더욱 다양한 컴포넌트와 기능, 최적화된 성능을 제공할 예정입니다. 
-                현재는 UI/UX 방향성과 디자인 시스템을 확인하실 수 있습니다.
-              </p>
-            </div>
           </div>
         </div>
 
-        {/* 1. Button Components */}
+        {/* 1. Typography System */}
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">1. 버튼 컴포넌트</h2>
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">1. 타이포그래피 시스템</h2>
+          
+          <div className="space-y-8">
+            {/* Font Family */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">폰트 패밀리: Pretendard</h3>
+              <div className="bg-gray-50 rounded-xl p-6">
+                <p className="text-base text-gray-600 mb-4">한국어와 영어 모두에 최적화된 가독성 높은 폰트</p>
+                <div className="grid gap-4">
+                  <div style={{ fontFamily: 'Pretendard, -apple-system, BlinkMacSystemFont, sans-serif' }}>
+                    <span className="text-sm text-gray-500">Pretendard Regular</span>
+                    <p className="text-lg">안녕하세요! Hello, World! 0123456789</p>
+                  </div>
+                  <div style={{ fontFamily: 'Pretendard, -apple-system, BlinkMacSystemFont, sans-serif', fontWeight: 600 }}>
+                    <span className="text-sm text-gray-500">Pretendard SemiBold</span>
+                    <p className="text-lg font-semibold">안녕하세요! Hello, World! 0123456789</p>
+                  </div>
+                  <div style={{ fontFamily: 'Pretendard, -apple-system, BlinkMacSystemFont, sans-serif', fontWeight: 700 }}>
+                    <span className="text-sm text-gray-500">Pretendard Bold</span>
+                    <p className="text-lg font-bold">안녕하세요! Hello, World! 0123456789</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Font Sizes */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">폰트 크기 가이드 (최소 14px)</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-6 p-4 bg-gray-50 rounded-lg">
+                  <span className="text-xs text-gray-500 w-16">text-xs</span>
+                  <span className="text-gray-400 w-12">12px</span>
+                  <span className="text-xs text-red-500">❌ 사용 금지</span>
+                </div>
+                <div className="flex items-center gap-6 p-4 bg-green-50 rounded-lg border border-green-200">
+                  <span className="text-sm text-gray-500 w-16">text-sm</span>
+                  <span className="text-gray-600 w-12">14px</span>
+                  <span className="text-sm">최소 크기 - 보조 정보, 캡션</span>
+                </div>
+                <div className="flex items-center gap-6 p-4 bg-gray-50 rounded-lg">
+                  <span className="text-base text-gray-500 w-16">text-base</span>
+                  <span className="text-gray-600 w-12">16px</span>
+                  <span className="text-base">기본 크기 - 본문 텍스트, 버튼</span>
+                </div>
+                <div className="flex items-center gap-6 p-4 bg-gray-50 rounded-lg">
+                  <span className="text-lg text-gray-500 w-16">text-lg</span>
+                  <span className="text-gray-600 w-12">18px</span>
+                  <span className="text-lg">중간 크기 - 소제목, 중요 정보</span>
+                </div>
+                <div className="flex items-center gap-6 p-4 bg-gray-50 rounded-lg">
+                  <span className="text-xl text-gray-500 w-16">text-xl</span>
+                  <span className="text-gray-600 w-12">20px</span>
+                  <span className="text-xl">큰 크기 - 페이지 제목</span>
+                </div>
+                <div className="flex items-center gap-6 p-4 bg-gray-50 rounded-lg">
+                  <span className="text-2xl text-gray-500 w-16">text-2xl</span>
+                  <span className="text-gray-600 w-12">24px</span>
+                  <span className="text-2xl">헤딩 - 섹션 제목</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 2. Color System */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">2. 컬러 시스템</h2>
+          
+          <div className="space-y-8">
+            {/* Primary Colors */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">Primary Colors</h3>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                {[
+                  { name: 'blue-50', color: '#eff6ff', text: 'dark' },
+                  { name: 'blue-100', color: '#dbeafe', text: 'dark' },
+                  { name: 'blue-500', color: '#3b82f6', text: 'light' },
+                  { name: 'blue-600', color: '#2563eb', text: 'light' },
+                  { name: 'blue-700', color: '#1d4ed8', text: 'light' },
+                ].map((item) => (
+                  <div key={item.name} className="text-center">
+                    <div 
+                      className="w-full h-20 rounded-lg shadow-md mb-2 flex items-center justify-center text-sm font-mono"
+                      style={{ 
+                        backgroundColor: item.color,
+                        color: item.text === 'light' ? 'white' : '#374151'
+                      }}
+                    >
+                      {item.color}
+                    </div>
+                    <p className="text-sm font-medium text-gray-600">{item.name}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Gray Scale */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">Gray Scale</h3>
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
+                {[
+                  { name: 'gray-50', color: '#f9fafb', text: 'dark' },
+                  { name: 'gray-100', color: '#f3f4f6', text: 'dark' },
+                  { name: 'gray-300', color: '#d1d5db', text: 'dark' },
+                  { name: 'gray-500', color: '#6b7280', text: 'light' },
+                  { name: 'gray-700', color: '#374151', text: 'light' },
+                  { name: 'gray-900', color: '#111827', text: 'light' },
+                ].map((item) => (
+                  <div key={item.name} className="text-center">
+                    <div 
+                      className="w-full h-16 rounded-lg shadow-md mb-2 flex items-center justify-center text-xs font-mono"
+                      style={{ 
+                        backgroundColor: item.color,
+                        color: item.text === 'light' ? 'white' : '#374151'
+                      }}
+                    >
+                      {item.color}
+                    </div>
+                    <p className="text-sm font-medium text-gray-600">{item.name}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Semantic Colors */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">Semantic Colors</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { name: 'Success', color: '#10b981', usage: '성공, 완료, 승인' },
+                  { name: 'Warning', color: '#f59e0b', usage: '주의, 대기, 알림' },
+                  { name: 'Error', color: '#ef4444', usage: '오류, 거부, 삭제' },
+                  { name: 'Info', color: '#3b82f6', usage: '정보, 링크, 액션' },
+                ].map((item) => (
+                  <div key={item.name} className="text-center bg-gray-50 rounded-lg p-4">
+                    <div 
+                      className="w-full h-16 rounded-lg shadow-md mb-3 flex items-center justify-center text-white text-xs font-mono"
+                      style={{ backgroundColor: item.color }}
+                    >
+                      {item.color}
+                    </div>
+                    <p className="text-sm font-bold text-gray-800 mb-1">{item.name}</p>
+                    <p className="text-xs text-gray-600">{item.usage}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 3. Icon System */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">3. 아이콘 시스템</h2>
+          
+          <div className="space-y-8">
+            {/* Icon Style Guide */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">아이콘 스타일 가이드</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-blue-50 rounded-xl p-6">
+                  <h4 className="font-semibold text-blue-900 mb-3">📏 크기 규격</h4>
+                  <ul className="text-sm text-blue-700 space-y-2">
+                    <li>• 16px: 작은 버튼, 인라인 아이콘</li>
+                    <li>• 20px: 기본 크기, 메뉴 아이콘</li>
+                    <li>• 24px: 헤더, 중요 액션</li>
+                    <li>• 32px: 대형 아이콘, 일러스트</li>
+                  </ul>
+                </div>
+                <div className="bg-purple-50 rounded-xl p-6">
+                  <h4 className="font-semibold text-purple-900 mb-3">🎨 스타일 원칙</h4>
+                  <ul className="text-sm text-purple-700 space-y-2">
+                    <li>• 2px 스트로크 두께</li>
+                    <li>• 둥근 모서리 (rounded)</li>
+                    <li>• 24x24 그리드 기준</li>
+                    <li>• 일관된 optical weight</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Icon Library Preview */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">주요 아이콘 라이브러리</h3>
+              <div className="bg-gray-50 rounded-xl p-6">
+                <div className="grid grid-cols-4 md:grid-cols-8 gap-6">
+                  {[
+                    { icon: '🏠', name: 'Home' },
+                    { icon: '📦', name: 'Products' }, 
+                    { icon: '🏪', name: 'Store' },
+                    { icon: '👤', name: 'User' },
+                    { icon: '⚙️', name: 'Settings' },
+                    { icon: '🔍', name: 'Search' },
+                    { icon: '🔔', name: 'Bell' },
+                    { icon: '📊', name: 'Chart' },
+                    { icon: '✏️', name: 'Edit' },
+                    { icon: '🗑️', name: 'Delete' },
+                    { icon: '💾', name: 'Save' },
+                    { icon: '📥', name: 'Download' },
+                    { icon: '📤', name: 'Upload' },
+                    { icon: '➕', name: 'Add' },
+                    { icon: '❌', name: 'Close' },
+                    { icon: '✅', name: 'Check' },
+                  ].map((item, index) => (
+                    <div key={index} className="text-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                      <div className="text-2xl mb-2">{item.icon}</div>
+                      <p className="text-xs text-gray-600 font-medium">{item.name}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <p className="text-sm text-yellow-800">
+                    <strong>실제 프로젝트에서는</strong> Lucide React, Heroicons, 또는 커스텀 SVG 아이콘을 사용합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. Layout System */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">4. 레이아웃 시스템</h2>
+          
+          <div className="space-y-8">
+            {/* Grid System */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">그리드 시스템</h3>
+              <div className="space-y-4">
+                {/* 12 Column Grid Visual */}
+                <div className="bg-blue-50 rounded-xl p-6">
+                  <h4 className="font-semibold text-blue-900 mb-4">12-Column Grid</h4>
+                  <div className="grid grid-cols-12 gap-2 mb-4">
+                    {Array.from({ length: 12 }, (_, i) => (
+                      <div key={i} className="bg-blue-200 text-blue-800 text-xs text-center py-2 rounded font-mono">
+                        {i + 1}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-12 gap-2">
+                      <div className="col-span-6 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">6 columns</div>
+                      <div className="col-span-6 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">6 columns</div>
+                    </div>
+                    <div className="grid grid-cols-12 gap-2">
+                      <div className="col-span-4 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">4 cols</div>
+                      <div className="col-span-4 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">4 cols</div>
+                      <div className="col-span-4 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">4 cols</div>
+                    </div>
+                    <div className="grid grid-cols-12 gap-2">
+                      <div className="col-span-3 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">3</div>
+                      <div className="col-span-9 bg-blue-300 text-blue-900 text-sm text-center py-3 rounded font-semibold">9 columns</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Layout Components */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <h4 className="font-semibold text-gray-900 mb-4">🖥️ 기본 레이아웃</h4>
+                    <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="space-y-2">
+                        <div className="h-8 bg-blue-100 rounded text-xs flex items-center justify-center text-blue-700 font-medium">Header</div>
+                        <div className="flex gap-2">
+                          <div className="w-16 h-20 bg-purple-100 rounded text-xs flex items-center justify-center text-purple-700 font-medium">Sidebar</div>
+                          <div className="flex-1 h-20 bg-gray-100 rounded text-xs flex items-center justify-center text-gray-700 font-medium">Main Content</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <h4 className="font-semibold text-gray-900 mb-4">📱 카드 레이아웃</h4>
+                    <div className="bg-white rounded-lg p-4 shadow-sm">
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="h-12 bg-green-100 rounded text-xs flex items-center justify-center text-green-700 font-medium">Card 1</div>
+                        <div className="h-12 bg-green-100 rounded text-xs flex items-center justify-center text-green-700 font-medium">Card 2</div>
+                        <div className="h-12 bg-green-100 rounded text-xs flex items-center justify-center text-green-700 font-medium">Card 3</div>
+                        <div className="h-12 bg-green-100 rounded text-xs flex items-center justify-center text-green-700 font-medium">Card 4</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Spacing System */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">간격 시스템</h3>
+              <div className="bg-gray-50 rounded-xl p-6">
+                <div className="space-y-4">
+                  {[
+                    { size: '4px', class: 'space-1', usage: '최소 간격' },
+                    { size: '8px', class: 'space-2', usage: '요소 내부 간격' },
+                    { size: '16px', class: 'space-4', usage: '기본 간격' },
+                    { size: '24px', class: 'space-6', usage: '섹션 간격' },
+                    { size: '32px', class: 'space-8', usage: '큰 섹션 간격' },
+                    { size: '48px', class: 'space-12', usage: '페이지 구분' },
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-center gap-4">
+                      <div className="w-16 text-sm text-gray-600 font-mono">{item.size}</div>
+                      <div className="w-24 text-sm text-blue-600 font-mono">{item.class}</div>
+                      <div 
+                        className="bg-blue-500 rounded"
+                        style={{ width: item.size, height: '8px' }}
+                      ></div>
+                      <div className="text-sm text-gray-600">{item.usage}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 5. Button Components */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">5. 버튼 컴포넌트</h2>
           <div className="space-y-6">
             
             {/* Sizes */}
@@ -1129,9 +1425,9 @@ const ComponentsLibrary: React.FC = () => {
           </div>
         </section>
 
-        {/* 2. Form Components */}
+        {/* 6. Form Components */}
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">2. 폼 컴포넌트</h2>
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">6. 폼 컴포넌트</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
             {/* Input Fields */}
@@ -1189,7 +1485,7 @@ const ComponentsLibrary: React.FC = () => {
 
         {/* 3. Tags and Badges */}
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">3. 태그 & 배지</h2>
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">7. 태그 & 배지</h2>
           
           {/* Chips */}
           <div className="mb-8">
@@ -1234,7 +1530,7 @@ const ComponentsLibrary: React.FC = () => {
 
         {/* 4. Product Cards */}
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">4. 상품 카드 (옵션 테이블 포함)</h2>
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">8. 상품 카드 (옵션 테이블 포함)</h2>
           
           <div className="space-y-8">
             
@@ -1295,7 +1591,7 @@ const ComponentsLibrary: React.FC = () => {
 
         {/* 5. Pagination */}
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-          <h2 className="text-2xl font-bold mb-6 text-gray-900">5. 페이지네이션</h2>
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">9. 페이지네이션</h2>
           
           <div className="space-y-8">
             <div>
