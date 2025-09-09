@@ -13,11 +13,14 @@ const Sidebar: React.FC = () => {
       icon: <Icon3D.Components />, 
       href: "/components-library", 
       active: true,
-      badge: "활성화",
-      subItems: [
-        { title: "컴포넌트 라이브러리", href: "/components-library", active: true },
-        { title: "와이어프레임 시스템", href: "/components-library#wireframe", active: false },
-      ]
+      subItems: []
+    },
+    { 
+      title: "📐 와이어프레임 시스템", 
+      icon: <Icon3D.Components />, 
+      href: "/wireframe", 
+      active: true,
+      subItems: []
     },
     { 
       title: "📦 상품 관리", 
@@ -88,7 +91,7 @@ const Sidebar: React.FC = () => {
                   {item.icon}
                 </div>
                 <span className="flex-1 font-semibold">{item.title}</span>
-                {item.badge && (
+                {item.badge && item.disabled && (
                   <span className="text-xs px-2 py-1 bg-gradient-to-r from-green-400 to-blue-400 text-white rounded-full font-medium shadow-sm">
                     {item.badge}
                   </span>

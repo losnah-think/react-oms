@@ -1,6 +1,30 @@
 "use client";
 import React, { useState } from "react";
 
+// ---------- Notice Banner ----------
+const NoticeBanner = () => (
+  <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg p-4 mb-8">
+    <div className="flex items-start gap-3">
+      <div className="flex-shrink-0 mt-0.5">
+        <div className="w-5 h-5 bg-amber-400 rounded-full flex items-center justify-center">
+          <span className="text-amber-800 text-xs font-bold">!</span>
+        </div>
+      </div>
+      <div>
+        <h3 className="text-amber-800 font-semibold mb-1">⚠️ 시스템 변동 안내</h3>
+        <p className="text-amber-700 text-sm leading-relaxed">
+          현재 기획/디자인 시스템은 <strong>개발 진행 중</strong>이며, 사용자 피드백과 기술적 요구사항에 따라 
+          <strong className="text-amber-800"> 언제든 변경될 수 있습니다.</strong> 
+          최종 구현 시에는 현재 보여지는 디자인과 기능이 달라질 수 있으니 참고해 주시기 바랍니다.
+        </p>
+        <div className="mt-2 text-xs text-amber-600">
+          💡 HTML to Figma 변환을 위해 각 컴포넌트의 다양한 상태를 미리 구현해두었습니다.
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
 // ---------- Types ----------
 type Variant = {
   id: string;
@@ -1678,6 +1702,9 @@ const ComponentsLibrary: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-8">
       <div className="max-w-7xl mx-auto space-y-10">
         
+        {/* Notice Banner */}
+        <NoticeBanner />
+        
         {/* Header */}
         <div 
           className="text-center bg-gradient-to-br from-white via-blue-50 to-purple-100 rounded-3xl p-10 shadow-2xl border-2 border-gray-200/50 relative overflow-hidden"
@@ -1729,6 +1756,141 @@ const ComponentsLibrary: React.FC = () => {
             </p>
           </div>
         </div>
+
+        {/* HTML to Figma States Preview */}
+        <section className="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl p-8 shadow-lg border border-green-200">
+          <h2 className="text-2xl font-bold mb-6 text-green-900">🎨 HTML to Figma 상태별 컴포넌트 미리보기</h2>
+          <div className="bg-green-100 rounded-lg p-4 mb-6">
+            <p className="text-green-800 text-sm">
+              💡 <strong>Figma 변환 최적화</strong>: 각 컴포넌트의 모든 상태를 미리 렌더링하여 HTML to Figma 플러그인에서 완전한 컴포넌트 시스템을 추출할 수 있도록 구성했습니다.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Button States */}
+            <div className="bg-white rounded-lg p-4 shadow-md">
+              <h3 className="font-semibold mb-3 text-gray-800">Button States</h3>
+              <div className="space-y-2">
+                <button className="w-full px-4 py-2 bg-brand-primary text-white rounded-lg">Normal</button>
+                <button className="w-full px-4 py-2 bg-brand-primary text-white rounded-lg opacity-80">Hover</button>
+                <button className="w-full px-4 py-2 bg-brand-primary text-white rounded-lg opacity-60">Active</button>
+                <button className="w-full px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed">Disabled</button>
+                <button className="w-full px-4 py-2 border-2 border-brand-primary text-brand-primary rounded-lg">Secondary</button>
+                <button className="w-full px-4 py-2 text-brand-primary">Text Only</button>
+              </div>
+            </div>
+
+            {/* Input States */}
+            <div className="bg-white rounded-lg p-4 shadow-md">
+              <h3 className="font-semibold mb-3 text-gray-800">Input States</h3>
+              <div className="space-y-2">
+                <input className="w-full px-3 py-2 border border-gray-300 rounded-lg" placeholder="Normal" />
+                <input className="w-full px-3 py-2 border-2 border-brand-primary rounded-lg" placeholder="Focused" />
+                <input className="w-full px-3 py-2 border-2 border-red-500 rounded-lg" placeholder="Error" />
+                <input disabled className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100" placeholder="Disabled" />
+                <input className="w-full px-3 py-2 border-2 border-green-500 rounded-lg" placeholder="Success" />
+              </div>
+            </div>
+
+            {/* Badge States */}
+            <div className="bg-white rounded-lg p-4 shadow-md">
+              <h3 className="font-semibold mb-3 text-gray-800">Badge States</h3>
+              <div className="space-y-2">
+                <div className="flex flex-wrap gap-1">
+                  <span className="px-2 py-1 bg-brand-primary text-white text-xs rounded-full">Primary</span>
+                  <span className="px-2 py-1 bg-green-500 text-white text-xs rounded-full">Success</span>
+                  <span className="px-2 py-1 bg-red-500 text-white text-xs rounded-full">Error</span>
+                  <span className="px-2 py-1 bg-yellow-500 text-white text-xs rounded-full">Warning</span>
+                  <span className="px-2 py-1 bg-gray-500 text-white text-xs rounded-full">Default</span>
+                  <span className="px-2 py-1 border border-brand-primary text-brand-primary text-xs rounded-full">Outline</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card States */}
+            <div className="bg-white rounded-lg p-4 shadow-md">
+              <h3 className="font-semibold mb-3 text-gray-800">Card States</h3>
+              <div className="space-y-2">
+                <div className="p-3 border border-gray-200 rounded-lg">Normal Card</div>
+                <div className="p-3 border-2 border-brand-primary rounded-lg">Selected</div>
+                <div className="p-3 border border-gray-200 rounded-lg shadow-lg">Elevated</div>
+                <div className="p-3 border border-gray-200 rounded-lg bg-gray-50">Disabled</div>
+              </div>
+            </div>
+
+            {/* Toggle States */}
+            <div className="bg-white rounded-lg p-4 shadow-md">
+              <h3 className="font-semibold mb-3 text-gray-800">Toggle States</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-6 bg-brand-primary rounded-full p-1">
+                    <div className="w-4 h-4 bg-white rounded-full ml-auto"></div>
+                  </div>
+                  <span className="text-sm">On</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-6 bg-gray-300 rounded-full p-1">
+                    <div className="w-4 h-4 bg-white rounded-full"></div>
+                  </div>
+                  <span className="text-sm">Off</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-6 bg-gray-200 rounded-full p-1 opacity-50">
+                    <div className="w-4 h-4 bg-gray-400 rounded-full"></div>
+                  </div>
+                  <span className="text-sm text-gray-400">Disabled</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Checkbox States */}
+            <div className="bg-white rounded-lg p-4 shadow-md">
+              <h3 className="font-semibold mb-3 text-gray-800">Checkbox States</h3>
+              <div className="space-y-2">
+                <label className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-brand-primary bg-brand-primary rounded flex items-center justify-center">
+                    <span className="text-white text-xs">✓</span>
+                  </div>
+                  <span className="text-sm">Checked</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-gray-300 rounded"></div>
+                  <span className="text-sm">Unchecked</span>
+                </label>
+                <label className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-gray-300 bg-gray-100 rounded opacity-50"></div>
+                  <span className="text-sm text-gray-400">Disabled</span>
+                </label>
+              </div>
+            </div>
+
+            {/* Loading States */}
+            <div className="bg-white rounded-lg p-4 shadow-md">
+              <h3 className="font-semibold mb-3 text-gray-800">Loading States</h3>
+              <div className="space-y-3">
+                <div className="w-6 h-6 border-2 border-brand-primary border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="bg-brand-primary h-2 rounded-full w-3/4"></div>
+                </div>
+                <div className="space-y-1">
+                  <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Alert States */}
+            <div className="bg-white rounded-lg p-4 shadow-md">
+              <h3 className="font-semibold mb-3 text-gray-800">Alert States</h3>
+              <div className="space-y-2">
+                <div className="p-2 bg-blue-100 border border-blue-300 rounded text-sm text-blue-800">Info</div>
+                <div className="p-2 bg-green-100 border border-green-300 rounded text-sm text-green-800">Success</div>
+                <div className="p-2 bg-yellow-100 border border-yellow-300 rounded text-sm text-yellow-800">Warning</div>
+                <div className="p-2 bg-red-100 border border-red-300 rounded text-sm text-red-800">Error</div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* 1. Typography System */}
         <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
@@ -3071,264 +3233,6 @@ const ComponentsLibrary: React.FC = () => {
                 <li>• 원가/공급가: 작은 글씨</li>
                 <li>• 마진: 초록색 강조</li>
               </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Wireframe System */}
-        <section id="wireframe" className="bg-gradient-to-br from-purple-50 to-indigo-100 rounded-2xl p-8 shadow-lg border border-purple-200">
-          <h2 className="text-2xl font-bold mb-6 text-purple-900">📐 기획 와이어프레임 시스템</h2>
-          
-          <div className="space-y-5">
-            {/* Wireframe Components */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4 text-purple-700">와이어프레임 컴포넌트</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {/* Header Wireframe */}
-                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
-                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Header Layout</h4>
-                  <div className="space-y-2">
-                    <div className="h-8 bg-gray-200 rounded flex items-center px-3">
-                      <div className="w-16 h-4 bg-gray-400 rounded mr-auto"></div>
-                      <div className="flex space-x-2">
-                        <div className="w-6 h-4 bg-gray-400 rounded"></div>
-                        <div className="w-6 h-4 bg-gray-400 rounded"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">로고 + 네비게이션</p>
-                </div>
-
-                {/* Sidebar Wireframe */}
-                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
-                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Sidebar Layout</h4>
-                  <div className="space-y-2">
-                    <div className="h-4 bg-gray-300 rounded w-3/4"></div>
-                    <div className="h-3 bg-gray-200 rounded w-full"></div>
-                    <div className="h-3 bg-gray-200 rounded w-5/6"></div>
-                    <div className="h-3 bg-gray-200 rounded w-4/5"></div>
-                    <div className="border-t border-gray-200 my-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-3/4"></div>
-                    <div className="h-3 bg-gray-200 rounded w-2/3"></div>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">메뉴 리스트</p>
-                </div>
-
-                {/* Content Grid Wireframe */}
-                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
-                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Content Grid</h4>
-                  <div className="grid grid-cols-3 gap-2">
-                    {Array.from({ length: 6 }).map((_, i) => (
-                      <div key={i} className="aspect-square bg-gray-200 rounded">
-                        <div className="p-1 h-full flex flex-col">
-                          <div className="flex-1 bg-gray-300 rounded mb-1"></div>
-                          <div className="h-2 bg-gray-300 rounded"></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">상품 그리드</p>
-                </div>
-
-                {/* Form Wireframe */}
-                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
-                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Form Layout</h4>
-                  <div className="space-y-3">
-                    <div>
-                      <div className="h-3 bg-gray-300 rounded w-1/4 mb-1"></div>
-                      <div className="h-6 bg-gray-200 rounded border"></div>
-                    </div>
-                    <div>
-                      <div className="h-3 bg-gray-300 rounded w-1/3 mb-1"></div>
-                      <div className="h-6 bg-gray-200 rounded border"></div>
-                    </div>
-                    <div className="h-8 bg-brand-primary/30 rounded flex items-center justify-center">
-                      <div className="w-12 h-3 bg-brand-primary rounded"></div>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">입력 폼</p>
-                </div>
-
-                {/* Table Wireframe */}
-                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
-                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Table Layout</h4>
-                  <div className="space-y-1">
-                    <div className="grid grid-cols-4 gap-1 bg-gray-300 p-1 rounded">
-                      {Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className="h-3 bg-gray-400 rounded"></div>
-                      ))}
-                    </div>
-                    {Array.from({ length: 3 }).map((_, i) => (
-                      <div key={i} className="grid grid-cols-4 gap-1 p-1">
-                        {Array.from({ length: 4 }).map((_, j) => (
-                          <div key={j} className="h-3 bg-gray-200 rounded"></div>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">데이터 테이블</p>
-                </div>
-
-                {/* Modal Wireframe */}
-                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
-                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Modal Layout</h4>
-                  <div className="bg-gray-100 rounded p-3">
-                    <div className="flex justify-between items-center mb-2">
-                      <div className="h-3 bg-gray-400 rounded w-1/2"></div>
-                      <div className="w-3 h-3 bg-gray-400 rounded"></div>
-                    </div>
-                    <div className="space-y-2">
-                      <div className="h-2 bg-gray-300 rounded"></div>
-                      <div className="h-2 bg-gray-300 rounded w-4/5"></div>
-                      <div className="h-2 bg-gray-300 rounded w-3/5"></div>
-                    </div>
-                    <div className="flex space-x-2 mt-3">
-                      <div className="flex-1 h-6 bg-gray-300 rounded"></div>
-                      <div className="flex-1 h-6 bg-brand-primary/30 rounded"></div>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-500 mt-2">모달 다이얼로그</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Layout Patterns */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4 text-purple-700">레이아웃 패턴</h3>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Dashboard Layout */}
-                <div className="bg-white rounded-lg p-6 shadow-md border border-purple-200">
-                  <h4 className="font-semibold text-purple-800 mb-4">📊 대시보드 레이아웃</h4>
-                  <div className="space-y-3">
-                    <div className="grid grid-cols-4 gap-2">
-                      {Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className="bg-gradient-to-br from-blue-100 to-purple-100 rounded p-2 text-center">
-                          <div className="w-6 h-6 bg-brand-primary/30 rounded mx-auto mb-1"></div>
-                          <div className="h-2 bg-gray-300 rounded"></div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-3 gap-3">
-                      <div className="col-span-2 bg-gray-50 rounded p-3">
-                        <div className="h-20 bg-gradient-to-r from-brand-primary/20 to-brand-soft-blue/20 rounded"></div>
-                      </div>
-                      <div className="bg-gray-50 rounded p-3">
-                        <div className="space-y-2">
-                          <div className="h-3 bg-gray-300 rounded"></div>
-                          <div className="h-3 bg-gray-300 rounded w-3/4"></div>
-                          <div className="h-3 bg-gray-300 rounded w-1/2"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* List Detail Layout */}
-                <div className="bg-white rounded-lg p-6 shadow-md border border-purple-200">
-                  <h4 className="font-semibold text-purple-800 mb-4">📋 목록-상세 레이아웃</h4>
-                  <div className="grid grid-cols-5 gap-3 h-24">
-                    <div className="col-span-2 bg-gray-50 rounded p-2">
-                      <div className="space-y-1">
-                        {Array.from({ length: 4 }).map((_, i) => (
-                          <div key={i} className={`h-3 rounded ${i === 1 ? 'bg-brand-primary/30' : 'bg-gray-300'}`}></div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="col-span-3 bg-gradient-to-br from-gray-50 to-purple-50 rounded p-2">
-                      <div className="h-4 bg-purple-300 rounded mb-2"></div>
-                      <div className="space-y-1">
-                        <div className="h-2 bg-gray-300 rounded"></div>
-                        <div className="h-2 bg-gray-300 rounded w-4/5"></div>
-                        <div className="h-2 bg-gray-300 rounded w-3/5"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Information Architecture */}
-            <div>
-              <h3 className="text-lg font-semibold mb-4 text-purple-700">정보 구조 (IA)</h3>
-              
-              <div className="bg-white rounded-lg p-6 shadow-md border border-purple-200">
-                <div className="space-y-4">
-                  {/* Hierarchy visualization */}
-                  <div className="text-center">
-                    <div className="inline-block bg-brand-primary text-white px-4 py-2 rounded-lg font-semibold">
-                      홈 대시보드
-                    </div>
-                  </div>
-                  
-                  <div className="flex justify-center">
-                    <div className="w-px h-6 bg-gray-300"></div>
-                  </div>
-                  
-                  <div className="grid grid-cols-4 gap-4">
-                    {['상품 관리', '주문 관리', '재고 관리', '설정'].map((item, i) => (
-                      <div key={i} className="text-center">
-                        <div className="bg-brand-soft-blue text-white px-3 py-2 rounded text-sm font-medium">
-                          {item}
-                        </div>
-                        <div className="w-px h-4 bg-gray-300 mx-auto mt-2"></div>
-                        <div className="space-y-1 mt-2">
-                          <div className="bg-gray-200 text-gray-600 px-2 py-1 rounded text-xs">하위메뉴1</div>
-                          <div className="bg-gray-200 text-gray-600 px-2 py-1 rounded text-xs">하위메뉴2</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Wireframe Guidelines */}
-            <div className="bg-purple-100 rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-4 text-purple-800">🎯 와이어프레임 가이드라인</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-semibold text-purple-700 mb-2">📏 구조 원칙</h4>
-                  <ul className="text-sm text-purple-600 space-y-1">
-                    <li>• 24-column 그리드 시스템 활용</li>
-                    <li>• 일관된 여백 (20px, 40px)</li>
-                    <li>• 명확한 시각적 계층구조</li>
-                    <li>• 반응형 레이아웃 고려</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-purple-700 mb-2">🎨 시각적 요소</h4>
-                  <ul className="text-sm text-purple-600 space-y-1">
-                    <li>• 브랜드 컬러 적용 (#007BED)</li>
-                    <li>• 점선 테두리로 구역 구분</li>
-                    <li>• 그레이스케일 와이어프레임</li>
-                    <li>• 간결한 레이블과 설명</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-purple-700 mb-2">🔄 상호작용</h4>
-                  <ul className="text-sm text-purple-600 space-y-1">
-                    <li>• 호버 상태 표현</li>
-                    <li>• 선택/활성 상태 구분</li>
-                    <li>• 로딩 상태 고려</li>
-                    <li>• 에러 상태 표현</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold text-purple-700 mb-2">📱 반응형 고려사항</h4>
-                  <ul className="text-sm text-purple-600 space-y-1">
-                    <li>• 모바일 우선 설계</li>
-                    <li>• 터치 친화적 크기 (44px+)</li>
-                    <li>• 적응적 네비게이션</li>
-                    <li>• 콘텐츠 우선순위 설정</li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </div>
         </section>
