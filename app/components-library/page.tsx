@@ -567,19 +567,19 @@ const ProductCard: React.FC<{
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => alert(`상품 클릭: ${product.name}`)}
     >
-      {/* 반응형 레이아웃: 모바일에서는 세로 배치, 태블릿 이상에서는 가로 배치 */}
-      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-6 p-4 lg:p-8">
-        {/* 체크박스 - 모바일에서는 최상단, 데스크탑에서는 좌측 */}
+      {/* 반응형 레이아웃: 모바일 세로 → 태블릿 가로 → 데스크탑 최적화 */}
+      <div className="flex flex-col md:grid md:grid-cols-12 xl:grid-cols-16 gap-3 md:gap-4 xl:gap-6 p-3 md:p-6 xl:p-8">
+        {/* 체크박스 - 모바일 최상단, 태블릿부터 좌측 */}
         {onToggleSelect && (
-          <div className="lg:col-span-1 flex items-start pt-2 order-first lg:order-none" onClick={(e) => e.stopPropagation()}>
+          <div className="md:col-span-1 xl:col-span-1 flex items-start pt-2 order-first md:order-none" onClick={(e) => e.stopPropagation()}>
             <Checkbox checked={selected} onChange={onToggleSelect} />
           </div>
         )}
 
-        {/* 이미지 - 모바일에서는 전체 너비, 데스크탑에서는 비례 */}
-        <div className={`${onToggleSelect ? 'lg:col-span-2' : 'lg:col-span-3'} w-full lg:w-auto rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 border-2 border-gray-200 transition-all duration-300 ${
+        {/* 이미지 - 모바일 전체 너비, 태블릿부터 비례 */}
+        <div className={`${onToggleSelect ? 'md:col-span-3 xl:col-span-2' : 'md:col-span-3 xl:col-span-3'} w-full md:w-auto rounded-2xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 border-2 border-gray-200 transition-all duration-300 ${
           isHovered ? 'scale-105 border-blue-300 shadow-xl' : ''
-        } ${variant === 'compact' ? 'h-20' : 'h-32 lg:h-36'} ${variant === 'compact' ? 'aspect-square' : 'aspect-video lg:aspect-square'} relative mx-auto lg:mx-0`}>
+        } ${variant === 'compact' ? 'h-20' : 'h-28 md:h-32 xl:h-36'} ${variant === 'compact' ? 'aspect-square' : 'aspect-video md:aspect-square'} relative mx-auto md:mx-0`}>
           {product.image ? (
             <img
               src={product.image}
@@ -608,11 +608,11 @@ const ProductCard: React.FC<{
           </div>
         </div>
 
-        {/* 상품 정보 - 모바일에서는 전체 너비, 데스크탑에서는 나머지 공간 */}
-        <div className={`${onToggleSelect ? 'lg:col-span-6' : 'lg:col-span-5'} min-w-0 flex flex-col justify-center order-2 lg:order-none`}>
-          <div className={`font-bold text-gray-900 mb-2 lg:mb-3 transition-colors duration-200 ${
+        {/* 상품 정보 - 모바일 전체 너비, 태블릿부터 나머지 공간 */}
+        <div className={`${onToggleSelect ? 'md:col-span-5 xl:col-span-8' : 'md:col-span-6 xl:col-span-8'} min-w-0 flex flex-col justify-center order-2 md:order-none`}>
+          <div className={`font-bold text-gray-900 mb-2 md:mb-3 transition-colors duration-200 ${
             isHovered ? 'text-blue-600' : ''
-          } ${variant === 'compact' ? 'text-lg' : 'text-xl lg:text-2xl'} break-words`}>
+          } ${variant === 'compact' ? 'text-lg' : 'text-lg md:text-xl xl:text-2xl'} break-words leading-tight`}>
             {product.name}
           </div>
           
@@ -620,36 +620,36 @@ const ProductCard: React.FC<{
             <div className="space-y-3">
               {/* 상품 기본 정보 - 두 줄로 배치 */}
               <div className="space-y-2">
-                {/* 첫 번째 줄: 상품코드, 등록일 */}
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm text-gray-600">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="font-medium text-gray-500 whitespace-nowrap">상품코드</span>
-                    <span className="font-mono bg-gradient-to-r from-gray-100 to-gray-200 px-2 lg:px-3 py-1 lg:py-1.5 rounded-lg text-xs font-semibold shadow-sm border truncate">{product.code}</span>
+                {/* 첫 번째 줄: 상품코드, 등록일 - 아이패드 고려한 반응형 */}
+                <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-3 xl:gap-6 text-sm text-gray-600">
+                  <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
+                    <span className="font-medium text-gray-500 whitespace-nowrap text-xs md:text-sm">상품코드</span>
+                    <span className="font-mono bg-gradient-to-r from-gray-100 to-gray-200 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-xs font-semibold shadow-sm border truncate max-w-32 md:max-w-none">{product.code}</span>
                   </div>
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="font-medium text-gray-500 whitespace-nowrap">등록일</span>
-                    <span className="text-gray-400 bg-gray-50 px-2 lg:px-3 py-1 lg:py-1.5 rounded-lg text-xs font-medium border truncate">{new Date(product.createdAt).toLocaleDateString("ko-KR")}</span>
+                  <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
+                    <span className="font-medium text-gray-500 whitespace-nowrap text-xs md:text-sm">등록일</span>
+                    <span className="text-gray-400 bg-gray-50 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-xs font-medium border truncate max-w-32 md:max-w-none">{new Date(product.createdAt).toLocaleDateString("ko-KR")}</span>
                   </div>
                 </div>
                 
-                {/* 두 번째 줄: 분류, 배송정책 */}
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm text-gray-600">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="font-medium text-gray-500 whitespace-nowrap">분류</span>
-                    <span className="bg-blue-50 text-blue-700 px-2 lg:px-3 py-1 lg:py-1.5 rounded-lg text-xs font-semibold border border-blue-200 truncate">{product.category || "미분류"}</span>
+                {/* 두 번째 줄: 분류, 배송정책 - 아이패드 고려한 반응형 */}
+                <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-3 xl:gap-6 text-sm text-gray-600">
+                  <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
+                    <span className="font-medium text-gray-500 whitespace-nowrap text-xs md:text-sm">분류</span>
+                    <span className="bg-blue-50 text-blue-700 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-xs font-semibold border border-blue-200 truncate max-w-32 md:max-w-none">{product.category || "미분류"}</span>
                   </div>
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="font-medium text-gray-500 whitespace-nowrap">배송정책</span>
-                    <span className="bg-purple-50 text-purple-700 px-2 lg:px-3 py-1 lg:py-1.5 rounded-lg text-xs font-semibold border border-purple-200 truncate">{product.shippingPolicy || "기본"}</span>
+                  <div className="flex items-center gap-2 min-w-0 flex-shrink-0">
+                    <span className="font-medium text-gray-500 whitespace-nowrap text-xs md:text-sm">배송정책</span>
+                    <span className="bg-purple-50 text-purple-700 px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-xs font-semibold border border-purple-200 truncate max-w-32 md:max-w-none">{product.shippingPolicy || "기본"}</span>
                   </div>
                 </div>
               </div>
 
-              {/* 3D 스타일 태그들 - 모바일에서는 세로 배치, 데스크탑에서는 가로 배치 */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mt-4">
+              {/* 3D 스타일 태그들 - 아이패드 고려한 반응형 배치 */}
+              <div className="flex flex-wrap items-center gap-2 md:gap-3 mt-3 md:mt-4">
                 <div className="relative">
                   <div
-                    className="bg-gradient-to-r from-green-400 to-emerald-500 text-white px-3 lg:px-4 py-1.5 lg:py-2 rounded-full text-xs font-bold shadow-lg transform hover:scale-105 transition-all duration-200 w-fit"
+                    className="bg-gradient-to-r from-green-400 to-emerald-500 text-white px-2 md:px-3 xl:px-4 py-1 md:py-1.5 xl:py-2 rounded-full text-xs font-bold shadow-lg transform hover:scale-105 transition-all duration-200 w-fit"
                     style={{
                       boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                       transform: 'perspective(100px) rotateX(3deg) rotateY(3deg)',
@@ -661,7 +661,7 @@ const ProductCard: React.FC<{
                 {firstV?.barcode?.length ? (
                   <div className="relative">
                     <div
-                      className="bg-gradient-to-r from-purple-400 to-purple-600 text-white px-3 lg:px-4 py-1.5 lg:py-2 rounded-full text-xs font-bold shadow-lg transform hover:scale-105 transition-all duration-200 w-fit"
+                      className="bg-gradient-to-r from-purple-400 to-purple-600 text-white px-2 md:px-3 xl:px-4 py-1 md:py-1.5 xl:py-2 rounded-full text-xs font-bold shadow-lg transform hover:scale-105 transition-all duration-200 w-fit"
                       style={{
                         boxShadow: '0 4px 12px rgba(124, 58, 237, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
                         transform: 'perspective(100px) rotateX(3deg) rotateY(-3deg)',
@@ -673,7 +673,7 @@ const ProductCard: React.FC<{
                 ) : null}
                 <div className="relative">
                   <div
-                    className={`text-white px-3 lg:px-4 py-1.5 lg:py-2 rounded-full text-xs font-bold shadow-lg transform hover:scale-105 transition-all duration-200 w-fit ${
+                    className={`text-white px-2 md:px-3 xl:px-4 py-1 md:py-1.5 xl:py-2 rounded-full text-xs font-bold shadow-lg transform hover:scale-105 transition-all duration-200 w-fit ${
                       product.stockManaged 
                         ? 'bg-gradient-to-r from-blue-400 to-blue-600' 
                         : 'bg-gradient-to-r from-gray-400 to-gray-600'
@@ -693,16 +693,16 @@ const ProductCard: React.FC<{
           )}
         </div>
 
-        {/* 가격 정보 - 모바일에서는 전체 너비, 데스크탑에서는 우측 배치 */}
-        <div className={`${onToggleSelect ? 'lg:col-span-2' : 'lg:col-span-3'} flex flex-col justify-center items-start lg:items-end order-3 lg:order-none`}>
-          <div className="text-left lg:text-right space-y-2 lg:space-y-3 w-full">
+        {/* 가격 정보 - 모바일 전체 너비, 태블릿부터 우측 배치 */}
+        <div className={`${onToggleSelect ? 'md:col-span-2 xl:col-span-3' : 'md:col-span-2 xl:col-span-3'} flex flex-col justify-center items-start md:items-end order-3 md:order-none`}>
+          <div className="text-left md:text-right space-y-2 md:space-y-3 w-full">
             {/* 판매가 - 3D 강조 */}
-            <div className="text-left lg:text-right">
-              <div className="text-sm text-gray-500 font-medium mb-1 lg:mb-2">판매가</div>
+            <div className="text-left md:text-right">
+              <div className="text-xs md:text-sm text-gray-500 font-medium mb-1 md:mb-2">판매가</div>
               <div
                 className={`font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-200 ${
                   isHovered ? 'scale-110 from-blue-700 to-purple-700' : ''
-                } ${variant === 'compact' ? 'text-lg lg:text-xl' : 'text-2xl lg:text-3xl'} break-words`}
+                } ${variant === 'compact' ? 'text-lg md:text-xl' : 'text-xl md:text-2xl xl:text-3xl'} break-words leading-tight`}
                 style={{
                   textShadow: '0 2px 4px rgba(59, 130, 246, 0.3)',
                 }}
@@ -711,26 +711,26 @@ const ProductCard: React.FC<{
               </div>
             </div>
             
-            {/* 기타 가격 정보 - 3D 카드 스타일 */}
+            {/* 기타 가격 정보 - 3D 카드 스타일, 아이패드 최적화 */}
             {variant !== 'compact' && (
               <div className="space-y-2 text-xs w-full">
                 <div 
-                  className="bg-gradient-to-r from-gray-50 to-white p-2 lg:p-3 rounded-xl border shadow-sm w-full"
+                  className="bg-gradient-to-r from-gray-50 to-white p-2 md:p-3 rounded-xl border shadow-sm w-full"
                   style={{
                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
                   }}
                 >
-                  <div className="flex justify-between gap-2 lg:gap-4 mb-1">
-                    <span className="text-gray-500 font-medium whitespace-nowrap">원가</span>
-                    <span className="font-semibold text-right truncate">{krw(product.purchasePrice)}</span>
+                  <div className="flex justify-between gap-1 md:gap-2 xl:gap-4 mb-1">
+                    <span className="text-gray-500 font-medium whitespace-nowrap text-xs">원가</span>
+                    <span className="font-semibold text-right truncate text-xs">{krw(product.purchasePrice)}</span>
                   </div>
-                  <div className="flex justify-between gap-2 lg:gap-4 mb-2">
-                    <span className="text-gray-500 font-medium whitespace-nowrap">공급가</span>
-                    <span className="font-semibold text-right truncate">{krw(product.supplyPrice)}</span>
+                  <div className="flex justify-between gap-1 md:gap-2 xl:gap-4 mb-2">
+                    <span className="text-gray-500 font-medium whitespace-nowrap text-xs">공급가</span>
+                    <span className="font-semibold text-right truncate text-xs">{krw(product.supplyPrice)}</span>
                   </div>
-                  <div className="flex justify-between gap-2 lg:gap-4 border-t pt-2">
-                    <span className="text-gray-500 font-medium whitespace-nowrap">마진</span>
-                    <span className="font-bold text-green-600 text-right truncate">{krw(product.marginPrice)}</span>
+                  <div className="flex justify-between gap-1 md:gap-2 xl:gap-4 border-t pt-2">
+                    <span className="text-gray-500 font-medium whitespace-nowrap text-xs">마진</span>
+                    <span className="font-bold text-green-600 text-right truncate text-xs">{krw(product.marginPrice)}</span>
                   </div>
                 </div>
               </div>
@@ -738,38 +738,38 @@ const ProductCard: React.FC<{
           </div>
         </div>
 
-        {/* 액션 버튼들 - 모바일에서는 하단에 가로 배치, 데스크탑에서는 우측에 세로 배치 */}
+        {/* 액션 버튼들 - 모바일 하단 가로, 태블릿부터 우측 세로 */}
         {showActions && (
-          <div className="lg:col-span-1 flex flex-row lg:flex-col items-center justify-center gap-2 lg:gap-3 order-last lg:order-none pt-2 lg:pt-0">
-            <div className={`flex flex-row lg:flex-col gap-2 lg:gap-3 transition-all duration-300 ${
+          <div className="md:col-span-1 xl:col-span-1 flex flex-row md:flex-col items-center justify-center gap-2 md:gap-3 order-last md:order-none pt-2 md:pt-0">
+            <div className={`flex flex-row md:flex-col gap-2 md:gap-3 transition-all duration-300 ${
               isHovered ? 'opacity-100 transform translate-x-0 scale-105' : 'opacity-80'
             }`}>
               <button 
                 onClick={(e) => {e?.stopPropagation(); alert(`수정: ${product.id}`);}}
                 className="p-0 border-none bg-transparent"
               >
-                <EditIcon3D size={24} />
+                <EditIcon3D size={20} className="md:w-6 md:h-6" />
               </button>
               <button 
                 onClick={(e) => {e?.stopPropagation(); alert(`복사: ${product.id}`);}}
                 className="p-0 border-none bg-transparent"
               >
-                <CopyIcon3D size={24} />
+                <CopyIcon3D size={20} className="md:w-6 md:h-6" />
               </button>
               <button 
                 onClick={(e) => {e?.stopPropagation(); alert(`삭제: ${product.id}`);}}
                 className="p-0 border-none bg-transparent"
               >
-                <DeleteIcon3D size={24} />
+                <DeleteIcon3D size={20} className="md:w-6 md:h-6" />
               </button>
             </div>
           </div>
         )}
       </div>
 
-      {/* Single variant summary - 전체 너비로 확장, 반응형 */}
+      {/* Single variant summary - 전체 너비, 아이패드 최적화 */}
       {!hasMulti && variant !== 'compact' && (
-        <div className={`mx-4 lg:mx-8 mb-4 lg:mb-6 rounded-2xl border-2 p-4 lg:p-6 transition-all duration-300 ${
+        <div className={`mx-3 md:mx-6 xl:mx-8 mb-3 md:mb-4 xl:mb-6 rounded-2xl border-2 p-3 md:p-4 xl:p-6 transition-all duration-300 ${
           isHovered ? 'bg-gradient-to-r from-blue-50 to-purple-50 border-blue-300 shadow-lg' : 'bg-gradient-to-r from-gray-50 to-white border-gray-200 shadow-sm'
         }`}
         style={{
@@ -777,7 +777,7 @@ const ProductCard: React.FC<{
             ? '0 8px 25px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5)'
             : '0 4px 12px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
         }}>
-          <div className="flex flex-col sm:flex-row sm:flex-wrap items-start sm:items-center gap-x-4 lg:gap-x-8 gap-y-2 lg:gap-y-3 text-sm text-gray-700">
+          <div className="flex flex-col md:flex-row md:flex-wrap items-start md:items-center gap-x-3 md:gap-x-4 xl:gap-x-8 gap-y-2 md:gap-y-3 text-sm text-gray-700">
             {firstV.attrs["기본옵션"] ? (
               <>
                 <div className="flex items-center gap-2 lg:gap-3 min-w-0">
