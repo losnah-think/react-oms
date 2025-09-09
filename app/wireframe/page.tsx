@@ -393,7 +393,7 @@ const WireModal: React.FC<{
 const WireframeSystem: React.FC = () => {
   useEffect(() => {
     // 페이지 로드 완료 로그
-    console.log('✅ 와이어프레임 시스템 페이지 로드 완료');
+    console.log('✅ 와이어프레임 페이지 로드 완료');
   }, []);
 
   return (
@@ -412,7 +412,7 @@ const WireframeSystem: React.FC = () => {
           </div>
           
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-            📐 와이어프레임 시스템
+            📐 와이어프레임
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             신속한 프로토타이핑을 위한 와이어프레임 컴포넌트 라이브러리
@@ -434,7 +434,7 @@ const WireframeSystem: React.FC = () => {
             <div>
               <h3 className="text-blue-800 font-semibold mb-1">📋 시스템 안내</h3>
               <p className="text-blue-700 text-sm leading-relaxed">
-                현재 와이어프레임 시스템은 <strong>프로토타이핑 전용</strong>이며, 빠른 기획 및 구조 설계를 위해 제작되었습니다.<br/>
+                현재 와이어프레임은 <strong>프로토타이핑 전용</strong>이며, 빠른 기획 및 구조 설계를 위해 제작되었습니다.<br/>
                 실제 개발 시에는 디자인 시스템의 완성된 컴포넌트를 사용해 주시기 바랍니다.
               </p>
             </div>

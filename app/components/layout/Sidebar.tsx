@@ -9,8 +9,8 @@ const Sidebar: React.FC = () => {
 
   const menuItems = [
     { 
-      title: "📐 와이어프레임 시스템", 
-      icon: <Icon3D.Settings />, 
+      title: "📐 와이어프레임", 
+      icon: <Icon3D.Wireframe />, 
       href: "/wireframe", 
       active: true,
       subItems: []
