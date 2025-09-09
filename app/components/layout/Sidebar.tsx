@@ -14,7 +14,10 @@ const Sidebar: React.FC = () => {
       href: "/components-library", 
       active: true,
       badge: "활성화",
-      subItems: []
+      subItems: [
+        { title: "컴포넌트 라이브러리", href: "/components-library", active: true },
+        { title: "와이어프레임 시스템", href: "/components-library#wireframe", active: false },
+      ]
     },
     { 
       title: "📦 상품 관리", 

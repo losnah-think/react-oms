@@ -981,6 +981,614 @@ const Pagination: React.FC<{
   );
 };
 
+// ---------- 9. Toggle Component ----------
+const Toggle: React.FC<{
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  disabled?: boolean;
+  size?: 'small' | 'medium' | 'large';
+  label?: string;
+}> = ({ checked, onChange, disabled = false, size = 'medium', label }) => {
+  const sizes = {
+    small: { toggle: 'w-10 h-6', thumb: 'w-4 h-4', translate: 'translate-x-4' },
+    medium: { toggle: 'w-12 h-7', thumb: 'w-5 h-5', translate: 'translate-x-5' },
+    large: { toggle: 'w-14 h-8', thumb: 'w-6 h-6', translate: 'translate-x-6' }
+  };
+
+  return (
+    <div className="flex items-center gap-3">
+      <button
+        type="button"
+        onClick={() => !disabled && onChange(!checked)}
+        disabled={disabled}
+        className={`${sizes[size].toggle} relative inline-flex items-center rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 ${
+          disabled 
+            ? 'opacity-50 cursor-not-allowed bg-gray-300' 
+            : checked 
+              ? 'bg-brand-primary shadow-lg' 
+              : 'bg-gray-300 hover:bg-gray-400'
+        }`}
+      >
+        <span
+          className={`${sizes[size].thumb} inline-block rounded-full bg-white shadow-lg transform transition-transform duration-200 ${
+            checked ? sizes[size].translate : 'translate-x-1'
+          }`}
+        />
+      </button>
+      {label && (
+        <span className={`text-sm font-medium ${disabled ? 'text-gray-400' : 'text-gray-700'}`}>
+          {label}
+        </span>
+      )}
+    </div>
+  );
+};
+
+// ---------- 10. Radio Component ----------
+const Radio: React.FC<{
+  name: string;
+  value: string;
+  checked: boolean;
+  onChange: (value: string) => void;
+  disabled?: boolean;
+  label?: string;
+}> = ({ name, value, checked, onChange, disabled = false, label }) => {
+  return (
+    <div className="flex items-center gap-3">
+      <button
+        type="button"
+        onClick={() => !disabled && onChange(value)}
+        disabled={disabled}
+        className={`w-5 h-5 rounded-full border-2 relative focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-1 transition-all duration-200 ${
+          disabled
+            ? 'opacity-50 cursor-not-allowed border-gray-300'
+            : checked
+              ? 'border-brand-primary bg-brand-primary'
+              : 'border-gray-300 hover:border-brand-primary'
+        }`}
+      >
+        {checked && (
+          <span className="absolute inset-1 rounded-full bg-white"></span>
+        )}
+      </button>
+      {label && (
+        <span className={`text-sm font-medium cursor-pointer ${disabled ? 'text-gray-400' : 'text-gray-700'}`} 
+              onClick={() => !disabled && onChange(value)}>
+          {label}
+        </span>
+      )}
+    </div>
+  );
+};
+
+// ---------- 11. Slider Component ----------
+const Slider: React.FC<{
+  value: number;
+  onChange: (value: number) => void;
+  min?: number;
+  max?: number;
+  step?: number;
+  disabled?: boolean;
+  label?: string;
+  showValue?: boolean;
+}> = ({ value, onChange, min = 0, max = 100, step = 1, disabled = false, label, showValue = true }) => {
+  const percentage = ((value - min) / (max - min)) * 100;
+
+  return (
+    <div className="w-full">
+      {label && (
+        <div className="flex justify-between items-center mb-2">
+          <label className={`text-sm font-medium ${disabled ? 'text-gray-400' : 'text-gray-700'}`}>
+            {label}
+          </label>
+          {showValue && (
+            <span className={`text-sm font-medium ${disabled ? 'text-gray-400' : 'text-brand-primary'}`}>
+              {value}
+            </span>
+          )}
+        </div>
+      )}
+      <div className="relative">
+        <input
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          disabled={disabled}
+          className={`w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-primary slider ${
+            disabled ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+          style={{
+            background: `linear-gradient(to right, #007BED 0%, #007BED ${percentage}%, #e5e7eb ${percentage}%, #e5e7eb 100%)`
+          }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// ---------- 12. Sliding Window Tabs Component ----------
+const SlidingTabs: React.FC<{
+  tabs: Array<{ id: string; label: string; content: React.ReactNode }>;
+  activeTab: string;
+  onTabChange: (tabId: string) => void;
+}> = ({ tabs, activeTab, onTabChange }) => {
+  const activeIndex = tabs.findIndex(tab => tab.id === activeTab);
+  
+  return (
+    <div className="w-full">
+      {/* Tab Headers */}
+      <div className="relative bg-gray-100 rounded-lg p-1 mb-4">
+        <div className="flex relative">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => onTabChange(tab.id)}
+              className={`flex-1 px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 relative z-10 ${
+                tab.id === activeTab
+                  ? 'text-brand-primary'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+          
+          {/* Sliding indicator */}
+          <div
+            className="absolute top-1 bottom-1 bg-white rounded-md shadow-sm transition-all duration-300 ease-out"
+            style={{
+              left: `${(activeIndex * 100) / tabs.length}%`,
+              width: `${100 / tabs.length}%`
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Tab Content */}
+      <div className="relative overflow-hidden">
+        <div
+          className="flex transition-transform duration-300 ease-out"
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+        >
+          {tabs.map((tab) => (
+            <div key={tab.id} className="w-full flex-shrink-0">
+              {tab.content}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ---------- 13. Modal Component ----------
+const Modal: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  children: React.ReactNode;
+  size?: 'small' | 'medium' | 'large';
+  showCloseButton?: boolean;
+}> = ({ isOpen, onClose, title, children, size = 'medium', showCloseButton = true }) => {
+  if (!isOpen) return null;
+
+  const sizes = {
+    small: 'max-w-md',
+    medium: 'max-w-lg',
+    large: 'max-w-4xl'
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300"
+        onClick={onClose}
+      />
+      
+      {/* Modal */}
+      <div className="flex min-h-full items-center justify-center p-4">
+        <div className={`relative bg-white rounded-2xl shadow-2xl transform transition-all duration-300 w-full ${sizes[size]}`}>
+          {/* Header */}
+          {(title || showCloseButton) && (
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              {title && (
+                <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+              )}
+              {showCloseButton && (
+                <button
+                  onClick={onClose}
+                  className="text-gray-400 hover:text-gray-600 transition-colors duration-200 p-1 rounded-full hover:bg-gray-100"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          )}
+          
+          {/* Content */}
+          <div className="p-6">
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ---------- 14. Toast Message Component ----------
+const Toast: React.FC<{
+  message: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+  isVisible: boolean;
+  onClose: () => void;
+  duration?: number;
+}> = ({ message, type, isVisible, onClose, duration = 3000 }) => {
+  React.useEffect(() => {
+    if (isVisible && duration > 0) {
+      const timer = setTimeout(onClose, duration);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, duration, onClose]);
+
+  if (!isVisible) return null;
+
+  const typeStyles = {
+    success: 'bg-green-500 text-white',
+    error: 'bg-red-500 text-white', 
+    warning: 'bg-yellow-500 text-white',
+    info: 'bg-brand-primary text-white'
+  };
+
+  const icons = {
+    success: '✓',
+    error: '✕',
+    warning: '⚠',
+    info: 'ℹ'
+  };
+
+  return (
+    <div className="fixed top-4 right-4 z-50 animate-slide-in-right">
+      <div className={`${typeStyles[type]} px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 min-w-80`}>
+        <span className="text-lg">{icons[type]}</span>
+        <span className="flex-1 text-sm font-medium">{message}</span>
+        <button onClick={onClose} className="text-white hover:opacity-70 transition-opacity">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// ---------- 15. Snackbar Component ----------
+const Snackbar: React.FC<{
+  message: string;
+  action?: { label: string; onClick: () => void };
+  isVisible: boolean;
+  onClose: () => void;
+  duration?: number;
+}> = ({ message, action, isVisible, onClose, duration = 4000 }) => {
+  React.useEffect(() => {
+    if (isVisible && duration > 0) {
+      const timer = setTimeout(onClose, duration);
+      return () => clearTimeout(timer);
+    }
+  }, [isVisible, duration, onClose]);
+
+  if (!isVisible) return null;
+
+  return (
+    <div className="fixed bottom-4 left-4 right-4 z-50 flex justify-center animate-slide-in-left">
+      <div className="bg-gray-800 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-4 max-w-md w-full">
+        <span className="flex-1 text-sm">{message}</span>
+        {action && (
+          <button
+            onClick={action.onClick}
+            className="text-brand-primary hover:text-blue-300 text-sm font-medium transition-colors"
+          >
+            {action.label}
+          </button>
+        )}
+        <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors ml-2">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+// ---------- 16. Alert Component ----------
+const Alert: React.FC<{
+  title: string;
+  message: string;
+  type: 'success' | 'error' | 'warning' | 'info';
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm?: () => void;
+  confirmText?: string;
+  cancelText?: string;
+}> = ({ title, message, type, isOpen, onClose, onConfirm, confirmText = '확인', cancelText = '취소' }) => {
+  if (!isOpen) return null;
+
+  const typeStyles = {
+    success: { bg: 'bg-green-50', border: 'border-green-200', icon: 'text-green-500', title: 'text-green-800' },
+    error: { bg: 'bg-red-50', border: 'border-red-200', icon: 'text-red-500', title: 'text-red-800' },
+    warning: { bg: 'bg-yellow-50', border: 'border-yellow-200', icon: 'text-yellow-500', title: 'text-yellow-800' },
+    info: { bg: 'bg-blue-50', border: 'border-blue-200', icon: 'text-blue-500', title: 'text-blue-800' }
+  };
+
+  const icons = {
+    success: '✓',
+    error: '✕',
+    warning: '⚠',
+    info: 'ℹ'
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" onClick={onClose} />
+      <div className="flex min-h-full items-center justify-center p-4">
+        <div className="relative bg-white rounded-lg shadow-xl max-w-md w-full animate-scale-in">
+          <div className={`${typeStyles[type].bg} ${typeStyles[type].border} border rounded-t-lg p-6`}>
+            <div className="flex items-center gap-3">
+              <div className={`${typeStyles[type].icon} text-2xl`}>
+                {icons[type]}
+              </div>
+              <h3 className={`text-lg font-semibold ${typeStyles[type].title}`}>
+                {title}
+              </h3>
+            </div>
+          </div>
+          
+          <div className="p-6">
+            <p className="text-gray-600 mb-6">{message}</p>
+            
+            <div className="flex justify-end gap-3">
+              <Button variant="secondary" onClick={onClose}>
+                {cancelText}
+              </Button>
+              {onConfirm && (
+                <Button 
+                  variant={type === 'error' ? 'danger' : 'primary'} 
+                  onClick={() => {
+                    onConfirm();
+                    onClose();
+                  }}
+                >
+                  {confirmText}
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ---------- 17. Loading Animation Component ----------
+const LoadingSpinner: React.FC<{
+  size?: 'small' | 'medium' | 'large';
+  color?: string;
+  text?: string;
+}> = ({ size = 'medium', color = '#007BED', text }) => {
+  const sizes = {
+    small: 'w-4 h-4',
+    medium: 'w-8 h-8', 
+    large: 'w-12 h-12'
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <div 
+        className={`${sizes[size]} border-2 border-gray-200 border-t-current rounded-full animate-spin`}
+        style={{ borderTopColor: color }}
+      />
+      {text && (
+        <p className="text-sm text-gray-600 font-medium">{text}</p>
+      )}
+    </div>
+  );
+};
+
+// ---------- 18. Table Component ----------
+const Table: React.FC<{
+  columns: Array<{ key: string; label: string; width?: string }>;
+  data: Array<Record<string, any>>;
+  onRowClick?: (row: any) => void;
+  loading?: boolean;
+  emptyMessage?: string;
+}> = ({ columns, data, onRowClick, loading = false, emptyMessage = "데이터가 없습니다." }) => {
+  if (loading) {
+    return (
+      <div className="border border-gray-200 rounded-lg">
+        <div className="p-8 flex justify-center">
+          <LoadingSpinner text="데이터를 불러오는 중..." />
+        </div>
+      </div>
+    );
+  }
+
+  if (data.length === 0) {
+    return (
+      <div className="border border-gray-200 rounded-lg">
+        {/* Header */}
+        <div className="bg-gray-50 border-b border-gray-200">
+          <div className="grid" style={{ gridTemplateColumns: columns.map(col => col.width || '1fr').join(' ') }}>
+            {columns.map((column) => (
+              <div key={column.key} className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                {column.label}
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        {/* Empty State */}
+        <div className="p-8 text-center">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div>
+              <h3 className="text-lg font-medium text-gray-900 mb-1">데이터 없음</h3>
+              <p className="text-sm text-gray-500">{emptyMessage}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="border border-gray-200 rounded-lg overflow-hidden">
+      {/* Header */}
+      <div className="bg-gray-50 border-b border-gray-200">
+        <div className="grid" style={{ gridTemplateColumns: columns.map(col => col.width || '1fr').join(' ') }}>
+          {columns.map((column) => (
+            <div key={column.key} className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+              {column.label}
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Body */}
+      <div className="divide-y divide-gray-200">
+        {data.map((row, index) => (
+          <div 
+            key={index}
+            className={`grid hover:bg-gray-50 transition-colors ${onRowClick ? 'cursor-pointer' : ''}`}
+            style={{ gridTemplateColumns: columns.map(col => col.width || '1fr').join(' ') }}
+            onClick={() => onRowClick?.(row)}
+          >
+            {columns.map((column) => (
+              <div key={column.key} className="px-4 py-3 text-sm text-gray-900">
+                {row[column.key]}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ---------- 19. Validation Input Field Component ----------
+const ValidationInput: React.FC<{
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  type?: string;
+  placeholder?: string;
+  required?: boolean;
+  disabled?: boolean;
+  error?: string;
+  success?: string;
+  helperText?: string;
+  rules?: Array<{
+    test: (value: string) => boolean;
+    message: string;
+  }>;
+}> = ({ 
+  label, 
+  value, 
+  onChange, 
+  type = 'text', 
+  placeholder, 
+  required = false, 
+  disabled = false,
+  error,
+  success,
+  helperText,
+  rules = []
+}) => {
+  const [touched, setTouched] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+
+  React.useEffect(() => {
+    if (touched && rules.length > 0) {
+      const errors = rules.filter(rule => !rule.test(value)).map(rule => rule.message);
+      setValidationErrors(errors);
+    }
+  }, [value, touched, rules]);
+
+  const hasError = error || (touched && validationErrors.length > 0);
+  const hasSuccess = success && !hasError;
+
+  return (
+    <div className="space-y-2">
+      <label className="block text-sm font-medium text-gray-700">
+        {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
+      </label>
+      
+      <div className="relative">
+        <input
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          onBlur={() => setTouched(true)}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={`w-full px-3 py-2 border rounded-lg text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1 ${
+            hasError
+              ? 'border-red-300 focus:border-red-500 focus:ring-red-200'
+              : hasSuccess
+                ? 'border-green-300 focus:border-green-500 focus:ring-green-200'
+                : 'border-gray-300 focus:border-brand-primary focus:ring-brand-primary/20'
+          } ${disabled ? 'bg-gray-50 cursor-not-allowed opacity-60' : 'bg-white'}`}
+        />
+        
+        {/* Status Icon */}
+        {(hasError || hasSuccess) && (
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+            {hasError ? (
+              <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            ) : (
+              <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            )}
+          </div>
+        )}
+      </div>
+      
+      {/* Messages */}
+      <div className="min-h-5">
+        {error && (
+          <p className="text-sm text-red-600">{error}</p>
+        )}
+        {!error && touched && validationErrors.length > 0 && (
+          <div className="space-y-1">
+            {validationErrors.map((err, index) => (
+              <p key={index} className="text-sm text-red-600">{err}</p>
+            ))}
+          </div>
+        )}
+        {success && !hasError && (
+          <p className="text-sm text-green-600">{success}</p>
+        )}
+        {helperText && !hasError && !hasSuccess && (
+          <p className="text-sm text-gray-500">{helperText}</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
 // ---------- Main Component Library Page ----------
 const ComponentsLibrary: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -988,6 +1596,28 @@ const ComponentsLibrary: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [checkboxStates, setCheckboxStates] = useState<Record<string, boolean>>({});
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  
+  // 새로운 컴포넌트 상태들
+  const [toggleStates, setToggleStates] = useState<Record<string, boolean>>({
+    notification: true,
+    darkMode: false,
+    autoSave: true
+  });
+  const [radioValue, setRadioValue] = useState("option1");
+  const [sliderValue, setSliderValue] = useState(50);
+  const [activeTab, setActiveTab] = useState("tab1");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // 추가 컴포넌트 상태들
+  const [toastState, setToastState] = useState({ visible: false, message: '', type: 'info' as 'success' | 'error' | 'warning' | 'info' });
+  const [snackbarState, setSnackbarState] = useState({ visible: false, message: '' });
+  const [alertState, setAlertState] = useState({ visible: false, title: '', message: '', type: 'info' as 'success' | 'error' | 'warning' | 'info' });
+  const [tableLoading, setTableLoading] = useState(false);
+  const [validationInputs, setValidationInputs] = useState({
+    email: '',
+    password: '',
+    username: ''
+  });
 
   const tags = ["세일", "신상품", "베스트", "추천", "한정판"];
 
@@ -1010,6 +1640,39 @@ const ComponentsLibrary: React.FC = () => {
       setSelectedProducts(prev => prev.filter(id => id !== productId));
     }
   };
+
+  const toggleState = (key: string) => {
+    setToggleStates(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const showToast = (message: string, type: 'success' | 'error' | 'warning' | 'info') => {
+    setToastState({ visible: true, message, type });
+  };
+
+  const showSnackbar = (message: string) => {
+    setSnackbarState({ visible: true, message });
+  };
+
+  const showAlert = (title: string, message: string, type: 'success' | 'error' | 'warning' | 'info') => {
+    setAlertState({ visible: true, title, message, type });
+  };
+
+  // 샘플 테이블 데이터
+  const sampleTableData = [
+    { id: 'P001', name: '프리미엄 티셔츠', category: '상의', price: '29,000원', stock: '150개', status: '판매중' },
+    { id: 'P002', name: '데님 청바지', category: '하의', price: '89,000원', stock: '75개', status: '판매중' },
+    { id: 'P003', name: '스니커즈', category: '신발', price: '129,000원', stock: '30개', status: '품절' },
+    { id: 'P004', name: '캐주얼 셔츠', category: '상의', price: '45,000원', stock: '200개', status: '판매중' },
+  ];
+
+  const tableColumns = [
+    { key: 'id', label: '상품코드', width: '100px' },
+    { key: 'name', label: '상품명', width: '200px' },
+    { key: 'category', label: '카테고리', width: '100px' },
+    { key: 'price', label: '가격', width: '100px' },
+    { key: 'stock', label: '재고', width: '80px' },
+    { key: 'status', label: '상태', width: '80px' },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-8">
@@ -1662,6 +2325,705 @@ const ComponentsLibrary: React.FC = () => {
           </div>
         </section>
 
+        {/* 10. Toggle Components */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">10. 토글 스위치</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">크기별 토글</h3>
+              
+              <div className="space-y-4">
+                <div className="flex items-center gap-8">
+                  <div>
+                    <h4 className="text-md font-medium mb-2 text-gray-600">Small</h4>
+                    <Toggle
+                      checked={toggleStates.notification}
+                      onChange={() => toggleState('notification')}
+                      size="small"
+                      label="알림 받기"
+                    />
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-md font-medium mb-2 text-gray-600">Medium</h4>
+                    <Toggle
+                      checked={toggleStates.darkMode}
+                      onChange={() => toggleState('darkMode')}
+                      size="medium"
+                      label="다크 모드"
+                    />
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-md font-medium mb-2 text-gray-600">Large</h4>
+                    <Toggle
+                      checked={toggleStates.autoSave}
+                      onChange={() => toggleState('autoSave')}
+                      size="large" 
+                      label="자동 저장"
+                    />
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-md font-medium mb-2 text-gray-600">Disabled</h4>
+                    <Toggle
+                      checked={false}
+                      onChange={() => {}}
+                      disabled
+                      label="비활성화"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">토글 사용 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• Small: 모바일 UI, 콤팩트한 설정 메뉴</li>
+                <li>• Medium: 일반적인 설정 토글, 기본 크기</li>
+                <li>• Large: 중요한 설정, 접근성이 중요한 경우</li>
+                <li>• 상태 변경 시 즉시 반영되는 설정에 사용</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 11. Radio Components */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">11. 라디오 버튼</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">라디오 그룹 예제</h3>
+              
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-md font-medium mb-3 text-gray-600">배송 옵션 선택</h4>
+                  <div className="space-y-3">
+                    <Radio
+                      name="shipping"
+                      value="standard"
+                      checked={radioValue === "standard"}
+                      onChange={setRadioValue}
+                      label="일반 배송 (2-3일)"
+                    />
+                    <Radio
+                      name="shipping"
+                      value="express"
+                      checked={radioValue === "express"}
+                      onChange={setRadioValue}
+                      label="익일 배송 (+3,000원)"
+                    />
+                    <Radio
+                      name="shipping"
+                      value="pickup"
+                      checked={radioValue === "pickup"}
+                      onChange={setRadioValue}
+                      label="매장 픽업"
+                    />
+                    <Radio
+                      name="shipping"
+                      value="disabled"
+                      checked={radioValue === "disabled"}
+                      onChange={setRadioValue}
+                      label="현재 불가능한 옵션"
+                      disabled
+                    />
+                  </div>
+                </div>
+                
+                <div className="p-4 bg-blue-50 rounded-lg">
+                  <p className="text-sm text-blue-700">
+                    <strong>선택된 값:</strong> {radioValue}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">라디오 버튼 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• 여러 옵션 중 하나만 선택 가능한 경우 사용</li>
+                <li>• 그룹 내에서 상호 배타적인 선택</li>
+                <li>• 옵션이 2-7개 정도일 때 적합</li>
+                <li>• 모든 옵션이 한 번에 보여야 하는 경우</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 12. Slider Component */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">12. 슬라이더</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">슬라이더 예제</h3>
+              
+              <div className="space-y-6">
+                <div className="max-w-md">
+                  <Slider
+                    value={sliderValue}
+                    onChange={setSliderValue}
+                    min={0}
+                    max={100}
+                    label="볼륨"
+                    showValue
+                  />
+                </div>
+                
+                <div className="max-w-md">
+                  <Slider
+                    value={25}
+                    onChange={() => {}}
+                    min={0}
+                    max={100}
+                    label="밝기 (비활성화)"
+                    disabled
+                    showValue
+                  />
+                </div>
+                
+                <div className="max-w-md">
+                  <Slider
+                    value={750}
+                    onChange={() => {}}
+                    min={100}
+                    max={1000}
+                    step={50}
+                    label="가격 범위 (₩)"
+                    showValue
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">슬라이더 사용 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• 연속적인 값의 범위에서 선택할 때 사용</li>
+                <li>• 볼륨, 밝기, 가격 범위 등에 적합</li>
+                <li>• 즉시 피드백이 필요한 설정에 사용</li>
+                <li>• step 속성으로 증가 단위 조절 가능</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 13. Sliding Tabs Component */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">13. 슬라이딩 탭</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">탭 네비게이션</h3>
+              
+              <SlidingTabs
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
+                tabs={[
+                  {
+                    id: "tab1",
+                    label: "상품 정보",
+                    content: (
+                      <div className="p-6 bg-gray-50 rounded-lg">
+                        <h4 className="font-semibold text-gray-900 mb-3">상품 기본 정보</h4>
+                        <div className="space-y-2 text-sm text-gray-600">
+                          <p>• 상품명: 프리미엄 코튼 티셔츠</p>
+                          <p>• 브랜드: 베이직웨어</p>
+                          <p>• 소재: 100% 코튼</p>
+                          <p>• 원산지: 대한민국</p>
+                        </div>
+                      </div>
+                    )
+                  },
+                  {
+                    id: "tab2", 
+                    label: "가격 정보",
+                    content: (
+                      <div className="p-6 bg-gray-50 rounded-lg">
+                        <h4 className="font-semibold text-gray-900 mb-3">가격 상세</h4>
+                        <div className="space-y-2 text-sm text-gray-600">
+                          <p>• 판매가: ₩29,000</p>
+                          <p>• 원가: ₩15,000</p>
+                          <p>• 공급가: ₩20,000</p>
+                          <p>• 마진: ₩9,000 (31%)</p>
+                        </div>
+                      </div>
+                    )
+                  },
+                  {
+                    id: "tab3",
+                    label: "재고 현황", 
+                    content: (
+                      <div className="p-6 bg-gray-50 rounded-lg">
+                        <h4 className="font-semibold text-gray-900 mb-3">재고 정보</h4>
+                        <div className="space-y-2 text-sm text-gray-600">
+                          <p>• 총 재고: 150개</p>
+                          <p>• 가용 재고: 142개</p>
+                          <p>• 예약 재고: 8개</p>
+                          <p>• 안전 재고: 20개</p>
+                        </div>
+                      </div>
+                    )
+                  }
+                ]}
+              />
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">슬라이딩 탭 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• 관련된 콘텐츠를 그룹화할 때 사용</li>
+                <li>• 부드러운 슬라이딩 애니메이션으로 사용성 향상</li>
+                <li>• 탭 개수는 2-5개가 적당</li>
+                <li>• 각 탭의 콘텐츠 길이가 비슷할 때 효과적</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 14. Modal Component */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">14. 모달</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">모달 예제</h3>
+              
+              <div className="space-y-4">
+                <div className="flex gap-4">
+                  <Button
+                    variant="primary"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    모달 열기
+                  </Button>
+                </div>
+                
+                <Modal
+                  isOpen={isModalOpen}
+                  onClose={() => setIsModalOpen(false)}
+                  title="상품 상세 정보"
+                  size="medium"
+                >
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-2">상품 설명</h4>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        프리미엄 코튼 100%로 제작된 부드럽고 편안한 티셔츠입니다. 
+                        데일리웨어로 착용하기 좋으며, 세탁 후에도 형태가 잘 유지됩니다.
+                      </p>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-1 block">사이즈</label>
+                        <select className="w-full p-2 border border-gray-300 rounded-lg">
+                          <option>S</option>
+                          <option>M</option>
+                          <option>L</option>
+                          <option>XL</option>
+                        </select>
+                      </div>
+                      
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-1 block">색상</label>
+                        <select className="w-full p-2 border border-gray-300 rounded-lg">
+                          <option>화이트</option>
+                          <option>블랙</option>
+                          <option>그레이</option>
+                        </select>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-end gap-3 pt-4">
+                      <Button
+                        variant="secondary"
+                        onClick={() => setIsModalOpen(false)}
+                      >
+                        취소
+                      </Button>
+                      <Button
+                        variant="primary"
+                        onClick={() => setIsModalOpen(false)}
+                      >
+                        장바구니 담기
+                      </Button>
+                    </div>
+                  </div>
+                </Modal>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">모달 사용 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• 추가 정보 입력이나 확인이 필요할 때 사용</li>
+                <li>• 현재 작업을 중단하지 않고 부가 작업 수행</li>
+                <li>• ESC 키나 배경 클릭으로 닫기 가능</li>
+                <li>• 모달 내용이 많을 경우 스크롤 가능</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 15. Toast Messages */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">15. 토스트 메시지</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">토스트 타입별 예제</h3>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <Button
+                  variant="success"
+                  onClick={() => showToast('작업이 성공적으로 완료되었습니다.', 'success')}
+                >
+                  성공 토스트
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => showToast('오류가 발생했습니다. 다시 시도해주세요.', 'error')}
+                >
+                  에러 토스트
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => showToast('주의가 필요한 상황입니다.', 'warning')}
+                >
+                  경고 토스트
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={() => showToast('새로운 알림이 있습니다.', 'info')}
+                >
+                  정보 토스트
+                </Button>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">토스트 사용 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• 사용자 액션에 대한 즉시 피드백 제공</li>
+                <li>• 자동으로 사라짐 (기본 3초)</li>
+                <li>• 화면 우상단에 표시</li>
+                <li>• 중요하지 않은 알림에 사용</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 16. Snackbar */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">16. 스낵바</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">스낵바 예제</h3>
+              
+              <div className="flex gap-4">
+                <Button
+                  variant="primary"
+                  onClick={() => showSnackbar('파일이 삭제되었습니다.')}
+                >
+                  기본 스낵바
+                </Button>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">스낵바 사용 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• 되돌리기 가능한 액션 후 사용</li>
+                <li>• 화면 하단에 표시</li>
+                <li>• 액션 버튼 제공 가능</li>
+                <li>• 토스트보다 지속시간이 길음 (기본 4초)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 17. Alert Dialogs */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">17. 알럿 다이얼로그</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">알럿 타입별 예제</h3>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <Button
+                  variant="success"
+                  onClick={() => showAlert('성공', '데이터가 성공적으로 저장되었습니다.', 'success')}
+                >
+                  성공 알럿
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={() => showAlert('오류', '파일 업로드 중 오류가 발생했습니다.', 'error')}
+                >
+                  에러 알럿
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => showAlert('주의', '이 작업은 되돌릴 수 없습니다.', 'warning')}
+                >
+                  경고 알럿
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={() => showAlert('정보', '새로운 업데이트가 있습니다.', 'info')}
+                >
+                  정보 알럿
+                </Button>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">알럿 사용 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• 중요한 정보나 확인이 필요한 경우</li>
+                <li>• 사용자의 명시적 응답 필요</li>
+                <li>• 모달 형태로 현재 작업 중단</li>
+                <li>• 확인/취소 버튼 제공</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 18. Loading Animations */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">18. 로딩 애니메이션</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">로딩 스피너 크기별 예제</h3>
+              
+              <div className="flex items-center gap-8">
+                <div className="text-center">
+                  <h4 className="text-sm font-medium mb-3 text-gray-600">Small</h4>
+                  <LoadingSpinner size="small" />
+                </div>
+                
+                <div className="text-center">
+                  <h4 className="text-sm font-medium mb-3 text-gray-600">Medium</h4>
+                  <LoadingSpinner size="medium" />
+                </div>
+                
+                <div className="text-center">
+                  <h4 className="text-sm font-medium mb-3 text-gray-600">Large</h4>
+                  <LoadingSpinner size="large" />
+                </div>
+                
+                <div className="text-center">
+                  <h4 className="text-sm font-medium mb-3 text-gray-600">With Text</h4>
+                  <LoadingSpinner size="medium" text="로딩 중..." />
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">로딩 애니메이션 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• 데이터 로딩이나 처리 중임을 표시</li>
+                <li>• 예상 대기시간에 따라 크기 조절</li>
+                <li>• 긴 작업 시 진행률 텍스트 추가</li>
+                <li>• 브랜드 컬러 적용 가능</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 19. Table Component */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">19. 테이블</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">일반 테이블</h3>
+              
+              <Table
+                columns={tableColumns}
+                data={sampleTableData}
+                onRowClick={(row) => showToast(`${row.name} 클릭됨`, 'info')}
+              />
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">로딩 상태 테이블</h3>
+              
+              <div className="flex gap-4 mb-4">
+                <Button
+                  variant={tableLoading ? "secondary" : "primary"}
+                  onClick={() => setTableLoading(!tableLoading)}
+                >
+                  {tableLoading ? '로딩 중지' : '로딩 시작'}
+                </Button>
+              </div>
+              
+              <Table
+                columns={tableColumns}
+                data={[]}
+                loading={tableLoading}
+              />
+            </div>
+
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">빈 테이블</h3>
+              
+              <Table
+                columns={tableColumns}
+                data={[]}
+                emptyMessage="상품이 등록되지 않았습니다. 새 상품을 등록해보세요."
+              />
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">테이블 사용 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• 정형화된 데이터 목록 표시</li>
+                <li>• 컬럼별 너비 지정 가능</li>
+                <li>• 행 클릭 이벤트 지원</li>
+                <li>• 로딩/빈 상태 처리</li>
+                <li>• 반응형 디자인 적용</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* 20. Validation Input Fields */}
+        <section className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h2 className="text-2xl font-bold mb-6 text-gray-900">20. 유효성 검사 입력 필드</h2>
+          
+          <div className="space-y-5">
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-gray-700">유효성 검사 예제</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <ValidationInput
+                  label="이메일"
+                  value={validationInputs.email}
+                  onChange={(value) => setValidationInputs(prev => ({ ...prev, email: value }))}
+                  type="email"
+                  placeholder="example@email.com"
+                  required
+                  rules={[
+                    {
+                      test: (value) => value.includes('@'),
+                      message: '이메일 형식이 올바르지 않습니다.'
+                    },
+                    {
+                      test: (value) => value.length >= 5,
+                      message: '이메일은 최소 5자 이상이어야 합니다.'
+                    }
+                  ]}
+                  helperText="로그인에 사용할 이메일을 입력해주세요."
+                />
+                
+                <ValidationInput
+                  label="비밀번호"
+                  value={validationInputs.password}
+                  onChange={(value) => setValidationInputs(prev => ({ ...prev, password: value }))}
+                  type="password"
+                  placeholder="비밀번호를 입력하세요"
+                  required
+                  rules={[
+                    {
+                      test: (value) => value.length >= 8,
+                      message: '비밀번호는 최소 8자 이상이어야 합니다.'
+                    },
+                    {
+                      test: (value) => /[A-Z]/.test(value),
+                      message: '대문자를 포함해야 합니다.'
+                    },
+                    {
+                      test: (value) => /[0-9]/.test(value),
+                      message: '숫자를 포함해야 합니다.'
+                    },
+                    {
+                      test: (value) => /[!@#$%^&*]/.test(value),
+                      message: '특수문자를 포함해야 합니다.'
+                    }
+                  ]}
+                />
+                
+                <ValidationInput
+                  label="사용자명"
+                  value={validationInputs.username}
+                  onChange={(value) => setValidationInputs(prev => ({ ...prev, username: value }))}
+                  placeholder="사용자명을 입력하세요"
+                  success={validationInputs.username.length >= 3 ? "사용 가능한 사용자명입니다." : undefined}
+                  rules={[
+                    {
+                      test: (value) => value.length >= 3,
+                      message: '사용자명은 최소 3자 이상이어야 합니다.'
+                    },
+                    {
+                      test: (value) => /^[a-zA-Z0-9_]+$/.test(value),
+                      message: '영문, 숫자, 언더스코어만 사용 가능합니다.'
+                    }
+                  ]}
+                />
+                
+                <ValidationInput
+                  label="비활성화된 필드"
+                  value="disabled@example.com"
+                  onChange={() => {}}
+                  disabled
+                  helperText="이 필드는 수정할 수 없습니다."
+                />
+              </div>
+            </div>
+
+            <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+              <h4 className="font-semibold text-gray-900 mb-2">유효성 검사 입력 필드 가이드</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• 실시간 유효성 검사 지원</li>
+                <li>• 커스텀 검사 규칙 설정 가능</li>
+                <li>• 성공/오류 상태 시각적 표시</li>
+                <li>• 도움말 텍스트 제공</li>
+                <li>• 필수 필드 표시 (*)</li>
+                <li>• 접근성을 고려한 디자인</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Toast, Snackbar, Alert Components */}
+        <Toast
+          message={toastState.message}
+          type={toastState.type}
+          isVisible={toastState.visible}
+          onClose={() => setToastState(prev => ({ ...prev, visible: false }))}
+        />
+        
+        <Snackbar
+          message={snackbarState.message}
+          isVisible={snackbarState.visible}
+          onClose={() => setSnackbarState(prev => ({ ...prev, visible: false }))}
+          action={{
+            label: '실행취소',
+            onClick: () => {
+              showToast('작업이 취소되었습니다.', 'info');
+              setSnackbarState(prev => ({ ...prev, visible: false }));
+            }
+          }}
+        />
+        
+        <Alert
+          title={alertState.title}
+          message={alertState.message}
+          type={alertState.type}
+          isOpen={alertState.visible}
+          onClose={() => setAlertState(prev => ({ ...prev, visible: false }))}
+          onConfirm={() => showToast('확인되었습니다.', 'success')}
+        />
+
         {/* Layout Guidelines */}
         <section className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-8 text-white shadow-xl">
           <h2 className="text-2xl font-bold mb-6">📐 레이아웃 가이드라인</h2>
@@ -1709,6 +3071,264 @@ const ComponentsLibrary: React.FC = () => {
                 <li>• 원가/공급가: 작은 글씨</li>
                 <li>• 마진: 초록색 강조</li>
               </ul>
+            </div>
+          </div>
+        </section>
+
+        {/* Wireframe System */}
+        <section id="wireframe" className="bg-gradient-to-br from-purple-50 to-indigo-100 rounded-2xl p-8 shadow-lg border border-purple-200">
+          <h2 className="text-2xl font-bold mb-6 text-purple-900">📐 기획 와이어프레임 시스템</h2>
+          
+          <div className="space-y-5">
+            {/* Wireframe Components */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-purple-700">와이어프레임 컴포넌트</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Header Wireframe */}
+                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
+                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Header Layout</h4>
+                  <div className="space-y-2">
+                    <div className="h-8 bg-gray-200 rounded flex items-center px-3">
+                      <div className="w-16 h-4 bg-gray-400 rounded mr-auto"></div>
+                      <div className="flex space-x-2">
+                        <div className="w-6 h-4 bg-gray-400 rounded"></div>
+                        <div className="w-6 h-4 bg-gray-400 rounded"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">로고 + 네비게이션</p>
+                </div>
+
+                {/* Sidebar Wireframe */}
+                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
+                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Sidebar Layout</h4>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+                    <div className="h-3 bg-gray-200 rounded w-full"></div>
+                    <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+                    <div className="h-3 bg-gray-200 rounded w-4/5"></div>
+                    <div className="border-t border-gray-200 my-2"></div>
+                    <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+                    <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">메뉴 리스트</p>
+                </div>
+
+                {/* Content Grid Wireframe */}
+                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
+                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Content Grid</h4>
+                  <div className="grid grid-cols-3 gap-2">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                      <div key={i} className="aspect-square bg-gray-200 rounded">
+                        <div className="p-1 h-full flex flex-col">
+                          <div className="flex-1 bg-gray-300 rounded mb-1"></div>
+                          <div className="h-2 bg-gray-300 rounded"></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">상품 그리드</p>
+                </div>
+
+                {/* Form Wireframe */}
+                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
+                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Form Layout</h4>
+                  <div className="space-y-3">
+                    <div>
+                      <div className="h-3 bg-gray-300 rounded w-1/4 mb-1"></div>
+                      <div className="h-6 bg-gray-200 rounded border"></div>
+                    </div>
+                    <div>
+                      <div className="h-3 bg-gray-300 rounded w-1/3 mb-1"></div>
+                      <div className="h-6 bg-gray-200 rounded border"></div>
+                    </div>
+                    <div className="h-8 bg-brand-primary/30 rounded flex items-center justify-center">
+                      <div className="w-12 h-3 bg-brand-primary rounded"></div>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">입력 폼</p>
+                </div>
+
+                {/* Table Wireframe */}
+                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
+                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Table Layout</h4>
+                  <div className="space-y-1">
+                    <div className="grid grid-cols-4 gap-1 bg-gray-300 p-1 rounded">
+                      {Array.from({ length: 4 }).map((_, i) => (
+                        <div key={i} className="h-3 bg-gray-400 rounded"></div>
+                      ))}
+                    </div>
+                    {Array.from({ length: 3 }).map((_, i) => (
+                      <div key={i} className="grid grid-cols-4 gap-1 p-1">
+                        {Array.from({ length: 4 }).map((_, j) => (
+                          <div key={j} className="h-3 bg-gray-200 rounded"></div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">데이터 테이블</p>
+                </div>
+
+                {/* Modal Wireframe */}
+                <div className="bg-white rounded-lg p-4 shadow-md border-2 border-dashed border-gray-300">
+                  <h4 className="text-sm font-semibold text-gray-600 mb-3">Modal Layout</h4>
+                  <div className="bg-gray-100 rounded p-3">
+                    <div className="flex justify-between items-center mb-2">
+                      <div className="h-3 bg-gray-400 rounded w-1/2"></div>
+                      <div className="w-3 h-3 bg-gray-400 rounded"></div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="h-2 bg-gray-300 rounded"></div>
+                      <div className="h-2 bg-gray-300 rounded w-4/5"></div>
+                      <div className="h-2 bg-gray-300 rounded w-3/5"></div>
+                    </div>
+                    <div className="flex space-x-2 mt-3">
+                      <div className="flex-1 h-6 bg-gray-300 rounded"></div>
+                      <div className="flex-1 h-6 bg-brand-primary/30 rounded"></div>
+                    </div>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2">모달 다이얼로그</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Layout Patterns */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-purple-700">레이아웃 패턴</h3>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Dashboard Layout */}
+                <div className="bg-white rounded-lg p-6 shadow-md border border-purple-200">
+                  <h4 className="font-semibold text-purple-800 mb-4">📊 대시보드 레이아웃</h4>
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-4 gap-2">
+                      {Array.from({ length: 4 }).map((_, i) => (
+                        <div key={i} className="bg-gradient-to-br from-blue-100 to-purple-100 rounded p-2 text-center">
+                          <div className="w-6 h-6 bg-brand-primary/30 rounded mx-auto mb-1"></div>
+                          <div className="h-2 bg-gray-300 rounded"></div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="col-span-2 bg-gray-50 rounded p-3">
+                        <div className="h-20 bg-gradient-to-r from-brand-primary/20 to-brand-soft-blue/20 rounded"></div>
+                      </div>
+                      <div className="bg-gray-50 rounded p-3">
+                        <div className="space-y-2">
+                          <div className="h-3 bg-gray-300 rounded"></div>
+                          <div className="h-3 bg-gray-300 rounded w-3/4"></div>
+                          <div className="h-3 bg-gray-300 rounded w-1/2"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* List Detail Layout */}
+                <div className="bg-white rounded-lg p-6 shadow-md border border-purple-200">
+                  <h4 className="font-semibold text-purple-800 mb-4">📋 목록-상세 레이아웃</h4>
+                  <div className="grid grid-cols-5 gap-3 h-24">
+                    <div className="col-span-2 bg-gray-50 rounded p-2">
+                      <div className="space-y-1">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                          <div key={i} className={`h-3 rounded ${i === 1 ? 'bg-brand-primary/30' : 'bg-gray-300'}`}></div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="col-span-3 bg-gradient-to-br from-gray-50 to-purple-50 rounded p-2">
+                      <div className="h-4 bg-purple-300 rounded mb-2"></div>
+                      <div className="space-y-1">
+                        <div className="h-2 bg-gray-300 rounded"></div>
+                        <div className="h-2 bg-gray-300 rounded w-4/5"></div>
+                        <div className="h-2 bg-gray-300 rounded w-3/5"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Information Architecture */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4 text-purple-700">정보 구조 (IA)</h3>
+              
+              <div className="bg-white rounded-lg p-6 shadow-md border border-purple-200">
+                <div className="space-y-4">
+                  {/* Hierarchy visualization */}
+                  <div className="text-center">
+                    <div className="inline-block bg-brand-primary text-white px-4 py-2 rounded-lg font-semibold">
+                      홈 대시보드
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-center">
+                    <div className="w-px h-6 bg-gray-300"></div>
+                  </div>
+                  
+                  <div className="grid grid-cols-4 gap-4">
+                    {['상품 관리', '주문 관리', '재고 관리', '설정'].map((item, i) => (
+                      <div key={i} className="text-center">
+                        <div className="bg-brand-soft-blue text-white px-3 py-2 rounded text-sm font-medium">
+                          {item}
+                        </div>
+                        <div className="w-px h-4 bg-gray-300 mx-auto mt-2"></div>
+                        <div className="space-y-1 mt-2">
+                          <div className="bg-gray-200 text-gray-600 px-2 py-1 rounded text-xs">하위메뉴1</div>
+                          <div className="bg-gray-200 text-gray-600 px-2 py-1 rounded text-xs">하위메뉴2</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Wireframe Guidelines */}
+            <div className="bg-purple-100 rounded-lg p-6">
+              <h3 className="text-lg font-semibold mb-4 text-purple-800">🎯 와이어프레임 가이드라인</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-semibold text-purple-700 mb-2">📏 구조 원칙</h4>
+                  <ul className="text-sm text-purple-600 space-y-1">
+                    <li>• 24-column 그리드 시스템 활용</li>
+                    <li>• 일관된 여백 (20px, 40px)</li>
+                    <li>• 명확한 시각적 계층구조</li>
+                    <li>• 반응형 레이아웃 고려</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold text-purple-700 mb-2">🎨 시각적 요소</h4>
+                  <ul className="text-sm text-purple-600 space-y-1">
+                    <li>• 브랜드 컬러 적용 (#007BED)</li>
+                    <li>• 점선 테두리로 구역 구분</li>
+                    <li>• 그레이스케일 와이어프레임</li>
+                    <li>• 간결한 레이블과 설명</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold text-purple-700 mb-2">🔄 상호작용</h4>
+                  <ul className="text-sm text-purple-600 space-y-1">
+                    <li>• 호버 상태 표현</li>
+                    <li>• 선택/활성 상태 구분</li>
+                    <li>• 로딩 상태 고려</li>
+                    <li>• 에러 상태 표현</li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="font-semibold text-purple-700 mb-2">📱 반응형 고려사항</h4>
+                  <ul className="text-sm text-purple-600 space-y-1">
+                    <li>• 모바일 우선 설계</li>
+                    <li>• 터치 친화적 크기 (44px+)</li>
+                    <li>• 적응적 네비게이션</li>
+                    <li>• 콘텐츠 우선순위 설정</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </section>
