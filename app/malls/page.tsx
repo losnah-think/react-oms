@@ -135,12 +135,6 @@ const MallManagementPage = () => {
             </div>
             
             <div className="flex items-center gap-3">
-              <Link 
-                href="/malls/analytics"
-                className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-              >
-                📊 통합 분석
-              </Link>
               <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                 🔄 전체 동기화
               </button>
