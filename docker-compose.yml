@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3030:3000"  # 3030 포트로 변경
+      - "5050:3000"  # 5050 포트로 변경
     environment:
       - NODE_ENV=production
       - NEXT_TELEMETRY_DISABLED=1
